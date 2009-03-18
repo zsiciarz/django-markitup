@@ -2,3 +2,6 @@
 django-markitup changelog
 =========================
 
+2009-03-18 Carl Meyer <carl@dirtcircle.com>
+
+* Initial public release (v0.2.0)
