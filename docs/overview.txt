@@ -10,7 +10,8 @@ Easy integration of the MarkItUp_ markup editor widget in Django projects.
 Installation
 ============
 
-Get the Bazaar trunk version of the application::
+Download a release tarball from Launchpad_, or get the Bazaar trunk
+version of the application::
 
     bzr checkout lp:django-markitup django-markitup
 
@@ -32,6 +33,7 @@ To install django-markitup:
         - Set the MARKITUP_PREVIEW_FILTER setting (see `Using AJAX preview`_ 
           below).
 
+.. _Launchpad: http://launchpad.net/django-markitup
 
 Using the MarkItUp! widget
 ==========================
