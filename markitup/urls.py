@@ -1,8 +1,8 @@
 from django.conf.urls.defaults import *
 
-from markitup.views import apply_markdown
+from markitup.views import apply_filter
 
 urlpatterns = patterns(
     '',
-    url(r'markdown/$', apply_markdown, name='markitup_markdown')
+    url(r'preview/$', apply_filter, name='markitup_preview')
     )
