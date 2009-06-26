@@ -11,8 +11,7 @@ Django projects. Includes server-side support for MarkItUp!'s AJAX preview.
 Installation
 ============
 
-Download a release tarball from Launchpad_, or get the Bazaar trunk
-version of the application::
+Install from PyPI, or get the Bazaar trunk version::
 
     bzr checkout lp:django-markitup django-markitup
 
@@ -24,7 +23,7 @@ To install django-markitup:
     2. Add ``'markitup'`` to your ``INSTALLED_APPS`` setting (not actually
        necessary, but probably a good idea).
 
-    3. Make the contents of the "markitup/media/markitup" directory
+    3. Make the contents of the ``markitup/media/markitup`` directory
        available at ``MEDIA_URL/markitup``.  This can be done by copying the
        files, making a symlink, or through your webserver configuration.
 
@@ -34,8 +33,6 @@ To install django-markitup:
           root URLconf.
         - Set the MARKITUP_PREVIEW_FILTER setting (see `Using AJAX preview`_ 
           below).
-
-.. _Launchpad: http://launchpad.net/django-markitup
 
 Using the MarkItUp! widget
 ==========================
