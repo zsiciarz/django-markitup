@@ -21,10 +21,9 @@ To install django-markitup:
 
     2. Put ``'markitup'`` in your ``INSTALLED_APPS`` setting.
 
-    3. Make the contents of the "markitup/media" directory available
-       at ``MEDIA_URL/markitup``.  This can be done by copying the
-       files, making a symlink, or through your webserver
-       configuration.
+    3. Make the contents of the "markitup/media/markitup" directory
+       available at ``MEDIA_URL/markitup``.  This can be done by copying the
+       files, making a symlink, or through your webserver configuration.
 
     4. If you want to use AJAX-based preview:
        
@@ -61,6 +60,11 @@ To use MarkItUpWidget in the Django admin:
         if db_field.name == 'content':
             kwargs['widget'] = MarkItUpWidget(attrs={'class': 'vLargeTextField'})
         return super(MyModelAdmin, self).formfield_for_dbfield(db_field, **kwargs)
+
+You can also use the formfield_overrides attribute of the ModelAdmin, which
+is simpler but only allows setting the widget per field type (so it isn't
+possible to use the MarkItUpWidget on one TextField in a model and not
+another).
 
 Choosing a MarkItUp! button set and skin
 ========================================
