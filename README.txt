@@ -53,7 +53,7 @@ When this form is displayed on your site, you must include the form
 media somewhere on the page using ``{{ form.media }}``, or the
 MarkItUpWidget will have no effect.
 
-To use MarkItUpWidget in the Django admin:
+To use MarkItUpWidget in the Django admin::
 
     from markitup.widgets import MarkItUpWidget
     
