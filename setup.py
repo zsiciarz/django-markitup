@@ -18,7 +18,6 @@ setup(
         'Programming Language :: Python',
         'Framework :: Django',
     ],
-    include_package_data=True,
+    package_data= {'': ['*.txt', '*.css', '*.png', '*.js', '*.html']},
     zip_safe=False,
-    setup_requires=['setuptools_bzr'],
 )
