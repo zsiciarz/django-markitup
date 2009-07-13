@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
  
 setup(
     name='django-markitup',
-    version='0.2.5',
+    version='0.2.6',
     description='Django integration with the MarkItUp universal markup editor',
     long_description=open('README.txt').read(),
     author='Carl Meyer',
@@ -18,6 +18,15 @@ setup(
         'Programming Language :: Python',
         'Framework :: Django',
     ],
-    package_data= {'': ['*.txt', '*.css', '*.png', '*.js', '*.html']},
+    package_data= {'': ['templates/markitup/preview.html',
+                        'media/markitup/*.js',
+                        'media/markitup/*.css',
+                        'media/markitup/sets/*/*.css',
+                        'media/markitup/sets/*/*.js',
+                        'media/markitup/sets/*/*.txt',
+                        'media/markitup/sets/*/images/*.png',
+                        'media/markitup/skins/*/*.css',
+                        'media/markitup/skins/*/images/*.png',
+                        'media/markitup/templates/preview.*']},
     zip_safe=False,
 )
