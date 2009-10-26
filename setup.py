@@ -2,15 +2,15 @@ from setuptools import setup, find_packages
  
 setup(
     name='django-markitup',
-    version='0.2.8',
+    version='0.2.9',
     description='Django integration with the MarkItUp universal markup editor',
     long_description=open('README.txt').read(),
     author='Carl Meyer',
     author_email='carl@dirtcircle.com',
-    url='http://launchpad.net/django-markitup',
+    url='http://bitbucket.org/carljm/django-markitup/',
     packages=find_packages(),
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 4 - Beta',
         'Environment :: Web Environment',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: BSD License',
@@ -18,7 +18,12 @@ setup(
         'Programming Language :: Python',
         'Framework :: Django',
     ],
-    include_package_data=True,
-    setup_requires=['setuptools_dummy'],
     zip_safe=False,
+    package_data={'markitup': ['templates/markitup/*.html',
+                               'media/markitup/*.*',
+                               'media/markitup/sets/*/*.*',
+                               'media/markitup/sets/*/images/*.png',
+                               'media/markitup/skins/*/*.*',
+                               'media/markitup/skins/*/images/*.png',
+                               'media/markitup/templates/*.*']}
 )
