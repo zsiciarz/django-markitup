@@ -30,11 +30,11 @@ To use django-markitup in your Django project:
        files, making a symlink, or through your webserver configuration.
 
     3. If you want to use AJAX-based preview:
-       
+
         - Add ``url(r'^markitup/', include('markitup.urls')`` in your
           root URLconf.
-        - Set the MARKITUP_PREVIEW_FILTER setting (see `Using AJAX preview`_ 
-          below).
+        - Set the MARKUP_FILTER (or MARKITUP_PREVIEW_FILTER) setting
+          (see `Using AJAX preview`_ below).
 
 Using the MarkItUp! widget
 ==========================
@@ -52,15 +52,15 @@ When this form is displayed on your site, you must include the form
 media somewhere on the page using ``{{ form.media }}``, or the
 MarkItUpWidget will have no effect.
 
-To use MarkItUpWidget in the Django admin::
+To use widget in the Django admin::
 
-    from markitup.widgets import MarkItUpWidget
-    
+    from markitup.widgets import AdminMarkItUpWidget
+
     class MyModelAdmin(admin.ModelAdmin):
     ...
     def formfield_for_dbfield(self, db_field, **kwargs):
         if db_field.name == 'content':
-            kwargs['widget'] = MarkItUpWidget(attrs={'class': 'vLargeTextField'})
+            kwargs['widget'] = AdminMarkItUpWidget()
         return super(MyModelAdmin, self).formfield_for_dbfield(db_field, **kwargs)
 
 You can also use the formfield_overrides attribute of the ModelAdmin, which
@@ -106,7 +106,7 @@ usual way via a Django form object, that id value is available as
 ``form.fieldname.auto_id``::
 
     {{ form.fieldname }}
-    
+
     {% markitup_editor form.fieldname.auto_id %}
 
 You can use ``markitup_editor`` on as many different textareas as you
@@ -154,9 +154,9 @@ Using AJAX preview
 
 If you've included ``markitup.urls`` in your root URLconf (as
 demonstrated above under `Installation`_), all you need to enable
-server-side AJAX preview is the ``MARKITUP_PREVIEW_FILTER`` setting.
+server-side AJAX preview is the ``MARKUP_FILTER`` setting.
 
-``MARKITUP_PREVIEW_FILTER`` must be a two-tuple.  
+``MARKUP_FILTER`` must be a two-tuple.
 
 The first element must be a string, the Python dotted path to a markup
 filter function.  This function should accept markup as its first
@@ -171,18 +171,21 @@ to the filter function.  The dictionary may be empty.
 For example, if you have python-markdown installed, you could use it
 like this::
 
-    MARKITUP_PREVIEW_FILTER = ('markdown.markdown', {'safe_mode': True})
+    MARKUP_FILTER = ('markdown.markdown', {'safe_mode': True})
 
 Alternatively, you could use the "textile" filter provided by Django
 like this::
 
-    MARKITUP_PREVIEW_FILTER = ('django.contrib.markup.templatetags.markup.textile', {})
+    MARKUP_FILTER = ('django.contrib.markup.templatetags.markup.textile', {})
 
 (The textile filter function doesn't accept keyword arguments, so the
 kwargs dictionary must be empty in this case.)
 
 **Note:** If you use your own custom MarkItUp! set, be sure to set the
   ``previewParserPath`` option to ``'/markitup/preview/'``.
+
+**Note** Old ``MARKITUP_PREVIEW_FILTER`` name for ``MARKUP_FILTER`` option
+is still supported.
 
 
 Other settings
