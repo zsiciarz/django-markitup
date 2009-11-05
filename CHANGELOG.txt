@@ -2,6 +2,13 @@
 django-markitup changelog
 =========================
 
+2009-11-04 Carl Meyer <carl@dirtcircle.com>
+
+* 0.3.0 release.
+
+* Added template-tag method for applying MarkItUp! editor (inspired by
+  django-wysiwyg).
+
 2009-06-26 Carl Meyer <carl@dirtcircle.com>
 
 * BACKWARDS-INCOMPATIBLE: moved media to media/markitup/ subdirectory to
