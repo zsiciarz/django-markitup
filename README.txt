@@ -11,23 +11,25 @@ Django projects. Includes server-side support for MarkItUp!'s AJAX preview.
 Installation
 ============
 
-Install from PyPI, or get the Bazaar trunk version::
+Install from PyPI with ``easy_install`` or ``pip``::
 
-    bzr checkout lp:django-markitup django-markitup
+    pip install django-markitup
 
-To install django-markitup:
+or get the `in-development version`_::
 
-    1. Put the ``markitup`` folder on your Python path (or use ``python
-       setup.py install``, easy_install, or pip).
+    pip install django-markitup==dev
 
-    2. Add ``'markitup'`` to your ``INSTALLED_APPS`` setting (not actually
-       necessary, but probably a good idea).
+.. _in-development version: http://bitbucket.org/carljm/django-markitup/get/tip.gz#egg=django_markitup-dev
 
-    3. Make the contents of the ``markitup/media/markitup`` directory
+To use django-markitup in your Django project:
+
+    1. Add ``'markitup'`` to your ``INSTALLED_APPS`` setting.
+
+    2. Make the contents of the ``markitup/media/markitup`` directory
        available at ``MEDIA_URL/markitup``.  This can be done by copying the
        files, making a symlink, or through your webserver configuration.
 
-    4. If you want to use AJAX-based preview:
+    3. If you want to use AJAX-based preview:
        
         - Add ``url(r'^markitup/', include('markitup.urls')`` in your
           root URLconf.
@@ -65,6 +67,55 @@ You can also use the formfield_overrides attribute of the ModelAdmin, which
 is simpler but only allows setting the widget per field type (so it isn't
 possible to use the MarkItUpWidget on one TextField in a model and not
 another).
+
+Using MarkItUp! via templates
+=============================
+
+In some cases it may be inconvenient to use ``MarkItUpWidget`` (for
+instance, if the form in question is defined in third-party code). For
+these cases, django-markitup provides template tags to achieve the
+same effect purely in templates.
+
+First, load the django-markitup template tag library::
+
+    {% load markitup_tags %}
+
+Then include the MarkItUp! CSS and Javascript in the <head> of your page::
+
+    {% markitup_head %}
+
+By default the ``markitup_head`` tag also includes jQuery, based on
+the value of your ``JQUERY_URL`` setting, with a fallback to the
+version hosted at Google Ajax APIs (see below). To suppress the
+inclusion of jQuery (if you are already including it yourself), pass
+any non-zero argument to the tag::
+
+    {% markitup_head "no-jquery" %}
+
+If you prefer to link CSS and Javascript from different locations, the
+``markitup_head`` tag can be replaced with two separate tags,
+``markitup_css`` and ``markitup_js``. ``markitup_js`` accepts a
+parameter to suppress jQuery inclusion, just like
+``markitup_head``. (Note that jQuery must be included in your template
+before the ``markitup_editor`` tag is used).
+
+Last, use the ``markitup_editor`` template tag to apply the MarkItUp!
+editor to a textarea in your page. It accepts one argument, the HTML
+id of the textarea. Note that if you are rendering the textarea in the
+usual way via a Django form object, that id value is available as
+``form.fieldname.auto_id``::
+
+    {{ form.fieldname }}
+    
+    {% markitup_editor form.fieldname.auto_id %}
+
+You can use ``markitup_editor`` on as many different textareas as you
+like.
+
+The actual HTML included by these templatetags is defined by the
+contents of the templates ``markitup/include_css.html``,
+``markitup/include_js.html``, and ``markitup/editor.html``. You can
+override these templates and customize them however you wish.
 
 Choosing a MarkItUp! button set and skin
 ========================================
