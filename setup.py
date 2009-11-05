@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
  
 setup(
     name='django-markitup',
-    version='0.3.0',
+    version='0.3.1dev',
     description='Django integration with the MarkItUp universal markup editor',
     long_description=open('README.txt').read(),
     author='Carl Meyer',
