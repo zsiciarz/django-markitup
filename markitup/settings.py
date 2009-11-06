@@ -1,14 +1,20 @@
 """
 settings for django-markitup
 
-Time-stamp: <2009-03-18 11:54:09 carljm settings.py>
+Time-stamp: <2009-11-05 16:28:48 carljm settings.py>
 
 """
 from django.conf import settings
+import posixpath
+
 
 MARKITUP_PREVIEW_FILTER = getattr(settings, 'MARKITUP_PREVIEW_FILTER', None)
-MARKITUP_SET = getattr(settings, 'MARKITUP_SET', 'markitup/sets/default')
-MARKITUP_SKIN = getattr(settings, 'MARKITUP_SKIN', 'markitup/skins/simple')
+MARKITUP_MEDIA_URL = getattr(settings, 'MARKITUP_MEDIA_URL', settings.MEDIA_URL)
+
+MARKITUP_SET = getattr(settings, 'MARKITUP_SET',
+                       'markitup/sets/default')
+MARKITUP_SKIN = getattr(settings, 'MARKITUP_SKIN',
+                        'markitup/skins/simple')
 JQUERY_URL = getattr(
     settings, 'JQUERY_URL',
     'http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js')
