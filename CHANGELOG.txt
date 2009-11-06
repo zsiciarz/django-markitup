@@ -2,6 +2,10 @@
 django-markitup changelog
 =========================
 
+2009-11-06 Carl Meyer <carl@dirtcircle.com> and Mike Korobov <kmike84@gmail.com>
+
+* Added ``MarkupField`` from http://github.com/carljm/django-markupfield
+
 2009-11-05 Carl Meyer <carl@dirtcircle.com>
 
 * Added test suite.

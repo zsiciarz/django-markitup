@@ -1,2 +1,7 @@
 ^dist/
 ^django_markitup.egg-info/
+^build/
+.pyc$
+
+^.project$
+^.pydevproject$

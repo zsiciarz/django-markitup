@@ -5,6 +5,10 @@ django-markitup
 Easy integration of the MarkItUp_ markup editor widget (by Jay Salvat) in
 Django projects. Includes server-side support for MarkItUp!'s AJAX preview.
 
+Also includes ``MarkupField``, a ``TextField`` that automatically
+renders and stores both its raw and rendered values in the database,
+on the assumption that disk space is cheaper than CPU cycles in a web
+application.
 
 .. _MarkItUp: http://markitup.jaysalvat.com/
 
@@ -32,10 +36,10 @@ To use django-markitup in your Django project:
        webserver configuration.
 
     3. If you want to use AJAX-based preview:
-       
+
         - Add ``url(r'^markitup/', include('markitup.urls')`` in your
           root URLconf.
-        - Set the MARKITUP_PREVIEW_FILTER setting (see `Using AJAX preview`_ 
+        - Set the MARKUP_FILTER setting (see `Using AJAX preview`_
           below).
 
 Using the MarkItUp! widget
@@ -54,15 +58,15 @@ When this form is displayed on your site, you must include the form
 media somewhere on the page using ``{{ form.media }}``, or the
 MarkItUpWidget will have no effect.
 
-To use MarkItUpWidget in the Django admin::
+To use widget in the Django admin::
 
-    from markitup.widgets import MarkItUpWidget
-    
+    from markitup.widgets import AdminMarkItUpWidget
+
     class MyModelAdmin(admin.ModelAdmin):
     ...
     def formfield_for_dbfield(self, db_field, **kwargs):
         if db_field.name == 'content':
-            kwargs['widget'] = MarkItUpWidget(attrs={'class': 'vLargeTextField'})
+            kwargs['widget'] = AdminMarkItUpWidget()
         return super(MyModelAdmin, self).formfield_for_dbfield(db_field, **kwargs)
 
 You can also use the formfield_overrides attribute of the ModelAdmin, which
@@ -70,13 +74,16 @@ is simpler but only allows setting the widget per field type (so it isn't
 possible to use the MarkItUpWidget on one TextField in a model and not
 another)::
 
-    from markitup.widgets import MarkItUpWidget
+    from markitup.widgets import AdminMarkItUpWidget
     
     class MyModelAdmin(admin.ModelAdmin):
-        formfield_overrides = {models.TextField: {'widget': MarkItUpWidget}}
+        formfield_overrides = {models.TextField: {'widget': AdminMarkItUpWidget}}
 
-Using MarkItUp! via templates
-=============================
+**Note:** If you use ``MarkupField`` in your model (see below), it is
+  rendered in the admin with an ``AdminMarkItUpWidget`` by default.
+
+Using MarkItUp! via templatetags
+================================
 
 In some cases it may be inconvenient to use ``MarkItUpWidget`` (for
 instance, if the form in question is defined in third-party code). For
@@ -113,7 +120,7 @@ usual way via a Django form object, that id value is available as
 ``form.fieldname.auto_id``::
 
     {{ form.fieldname }}
-    
+
     {% markitup_editor form.fieldname.auto_id %}
 
 You can use ``markitup_editor`` on as many different textareas as you
@@ -124,6 +131,87 @@ contents of the templates ``markitup/include_css.html``,
 ``markitup/include_js.html``, and ``markitup/editor.html``. You can
 override these templates in your project and customize them however
 you wish.
+
+MarkupField
+===========
+
+You can apply the MarkItUp! editor control to any textarea using the
+above techniques, and handle the markup on the server side however you
+prefer. 
+
+For a seamless markup-handling solution, django-markitup also provides
+a ``MarkupField`` model field that automatically renders and stores
+both its raw and rendered values in the database, using the value of
+the ``MARKUP_FILTER`` setting to parse the markup into HTML.
+
+A ``MarkupField`` is easy to add to any model definition::
+
+    from django.db import models
+    from markitup.fields import MarkupField
+
+    class Article(models.Model):
+        title = models.CharField(max_length=100)
+        body = MarkupField()
+
+``MarkupField`` automatically creates an extra non-editable field
+``_body_rendered`` to store the rendered markup. This field doesn't
+need to be accessed directly; see below.
+
+Accessing a MarkupField on a model
+----------------------------------
+
+When accessing an attribute of a model that was declared as a
+``MarkupField``, a ``Markup`` object is returned.  The ``Markup``
+object has two attributes:
+
+``raw``:
+    The unrendered markup.
+``rendered``:
+    The rendered HTML version of ``raw`` (read-only).
+
+This object also has a ``__unicode__`` method that calls
+``django.utils.safestring.mark_safe`` on ``rendered``, allowing
+``MarkupField`` attributes to appear in templates as rendered HTML
+without any special template tag or having to access ``rendered``
+directly.
+
+Assuming the ``Article`` model above::
+
+    >>> a = Article.objects.all()[0]
+    >>> a.body.raw
+    u'*fancy*'
+    >>> a.body.rendered
+    u'<p><em>fancy</em></p>'
+    >>> print unicode(a.body)
+    <p><em>fancy</em></p>
+
+Assignment to ``a.body`` is equivalent to assignment to
+``a.body.raw``.
+
+.. note::
+    a.body.rendered is only updated when a.save() is called
+
+Editing a MarkupField in a form
+-------------------------------
+
+When editing a ``MarkupField`` model attribute in a ``ModelForm``
+(i.e. in the Django admin), you'll generally want to edit the original
+markup and not the rendered HTML.  Because the ``Markup`` object
+returns rendered HTML from its __unicode__ method, it's necessary to
+use the ``MarkupTextarea`` widget from the ``markupfield.widgets``
+module, which knows to return the raw markup instead.
+
+By default, a ``MarkupField`` uses the MarkItUp! editor control in the
+admin (via the provided ``AdminMarkItUpWidget``), but a plain
+``MarkupTextarea`` in other forms. If you wish to use the MarkItUp!
+editor with this ``MarkupField`` in your own form, you'll need to use
+the provided ``MarkItUpWidget`` rather than ``MarkupTextarea``.
+
+If you apply your own custom widget to the form field representing a
+``MarkupField``, your widget must either inherit from
+``MarkupTextarea`` or its ``render`` method must convert its ``value``
+argument to ``value.raw``.
+
 
 Choosing a MarkItUp! button set and skin
 ========================================
@@ -163,9 +251,9 @@ Using AJAX preview
 
 If you've included ``markitup.urls`` in your root URLconf (as
 demonstrated above under `Installation`_), all you need to enable
-server-side AJAX preview is the ``MARKITUP_PREVIEW_FILTER`` setting.
+server-side AJAX preview is the ``MARKUP_FILTER`` setting.
 
-``MARKITUP_PREVIEW_FILTER`` must be a two-tuple.  
+``MARKUP_FILTER`` must be a two-tuple.
 
 The first element must be a string, the Python dotted path to a markup
 filter function.  This function should accept markup as its first
@@ -180,15 +268,18 @@ to the filter function.  The dictionary may be empty.
 For example, if you have python-markdown installed, you could use it
 like this::
 
-    MARKITUP_PREVIEW_FILTER = ('markdown.markdown', {'safe_mode': True})
+    MARKUP_FILTER = ('markdown.markdown', {'safe_mode': True})
 
 Alternatively, you could use the "textile" filter provided by Django
 like this::
 
-    MARKITUP_PREVIEW_FILTER = ('django.contrib.markup.templatetags.markup.textile', {})
+    MARKUP_FILTER = ('django.contrib.markup.templatetags.markup.textile', {})
 
 (The textile filter function doesn't accept keyword arguments, so the
 kwargs dictionary must be empty in this case.)
+
+``django-markitup`` provides one sample rendering function,
+``render_rest`` in the ``markitup.renderers`` module.
 
 The rendered HTML content is displayed in the Ajax preview wrapped by
 an HTML page generated by the ``markitup/preview.html`` template; you
@@ -210,6 +301,13 @@ static assets. If you keep static assets at a URL other than
 ``MEDIA_URL``, just set ``MARKITUP_MEDIA_URL`` to that URL, and make
 sure the contents of the ``markitup/media/markitup`` directory are
 available at ``MARKITUP_MEDIA_URL/markitup/``.
+
+MARKITUP_PREVIEW_FILTER
+-----------------------
+
+This optional setting can be used to override the markup filter used
+for the Ajax preview view. It has the same format as
+``MARKUP_FILTER``; by default it is set equal to ``MARKUP_FILTER``.
 
 JQUERY_URL
 ----------
