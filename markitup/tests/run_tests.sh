@@ -1,1 +1,1 @@
-django-admin.py test -v2 --settings=markitup.tests.settings --pythonpath=../..
+django-admin.py test --settings=markitup.tests.settings --pythonpath=../..
