@@ -226,3 +226,4 @@ set the JQUERY_URL setting.  For example::
 This will use the jQuery available at MEDIA_URL/jquery.min.js. Note
 that a relative ``JQUERY_URL`` is always relative to ``MEDIA_URL``, it
 does not use ``MARKITUP_MEDIA_URL``.
+

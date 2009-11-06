@@ -1,3 +1,4 @@
+import warnings
 from django import template
 from django.conf import settings as django_settings
 from markitup import settings
@@ -21,6 +22,12 @@ register._markitup_context = _get_markitup_context()
 def markitup_media(no_jquery=False):
     include_jquery = not bool(no_jquery)
     return dict(register._markitup_context, include_jquery=include_jquery)
+
+# old deprecated version
+@register.inclusion_tag('markitup/include_all.html')
+def markitup_head(no_jquery=False):
+    warnings.warn(DeprecationWarning('markitup_head template tag is deprecated, use markitup_media instead'))
+    return markitup_media(no_jquery)
 
 @register.inclusion_tag('markitup/include_js.html')
 def markitup_js(no_jquery=False):

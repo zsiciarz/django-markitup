@@ -4,7 +4,7 @@ setup(
     name='django-markitup',
     version='0.3.1dev',
     description='Django integration with the MarkItUp universal markup editor',
-    long_description=open('README.txt').read(),
+    long_description=open('README.txt').read() + open('CHANGELOG.txt').read(),
     author='Carl Meyer',
     author_email='carl@dirtcircle.com',
     url='http://bitbucket.org/carljm/django-markitup/',
