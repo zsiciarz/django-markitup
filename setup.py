@@ -19,6 +19,7 @@ setup(
         'Framework :: Django',
     ],
     zip_safe=False,
+    test_suite='tests.runtests.runtests',
     package_data={'markitup': ['templates/markitup/*.html',
                                'media/markitup/*.*',
                                'media/markitup/sets/*/*.*',
