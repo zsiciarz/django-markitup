@@ -1,10 +1,32 @@
 from setuptools import setup, find_packages
- 
+import subprocess
+import os.path
+
+try:
+    # don't get confused if our sdist is unzipped in a subdir of some 
+    # other hg repo
+    if os.path.isdir('./.hg'):
+        p = subprocess.Popen(['hg', 'log', '-l1', '--template={rev}'],
+                             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        if not p.returncode:
+            fh = open('HGREV', 'w')
+            fh.write(p.communicate()[0])
+            fh.close()
+except OSError:
+    pass
+    
+try:
+    hgrev = open('HGREV').read()
+except IOError:
+    hgrev = ''
+    
+long_description = open('README.txt').read() + open('CHANGELOG.txt').read()
+
 setup(
     name='django-markitup',
-    version='0.4.0dev',
+    version='0.4.0dev%s' % hgrev,
     description='Django integration with the MarkItUp universal markup editor',
-    long_description=open('README.txt').read() + open('CHANGELOG.txt').read(),
+    long_description=long_description,
     author='Carl Meyer',
     author_email='carl@dirtcircle.com',
     url='http://bitbucket.org/carljm/django-markitup/',
