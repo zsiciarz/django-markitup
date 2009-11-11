@@ -2,6 +2,11 @@
 django-markitup changelog
 =========================
 
+2009-11-11 Carl Meyer <carl@dirtcircle.com>
+
+* Changed ``MARKUP_FILTER`` setting to ``MARKITUP_FILTER`` to avoid
+  conflicts with other apps' settings.
+
 2009-11-06 Carl Meyer <carl@dirtcircle.com> and Mike Korobov <kmike84@gmail.com>
 
 * Added ``MarkupField`` from http://github.com/carljm/django-markupfield

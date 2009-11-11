@@ -34,15 +34,14 @@ To use django-markitup in your Django project:
 
     2. Make the contents of the ``markitup/media/markitup`` directory
        available at ``MEDIA_URL/markitup`` (or
-       ``MARKITUP_MEDIA_URL/markitup``, see below).  This can be done
-       by copying the files, making a symlink, or through your
-       webserver configuration.
+       ``MARKITUP_MEDIA_URL/markitup``, see `MARKITUP_MEDIA_URL`_).
+       This can be done by copying the files, making a symlink, or
+       through your webserver configuration.
 
-    3. If you want to use AJAX-based preview:
+    3. Set `the MARKITUP_FILTER setting`_.
 
-        - Add ``url(r'^markitup/', include('markitup.urls')`` in your
-          root URLconf.
-        - Set `the MARKITUP_FILTER setting`_.
+    3. If you want to use AJAX-based preview, add 
+          ``url(r'^markitup/', include('markitup.urls')`` in your root URLconf.
 
 Using the MarkItUp! widget
 ==========================
@@ -81,8 +80,8 @@ another)::
     class MyModelAdmin(admin.ModelAdmin):
         formfield_overrides = {models.TextField: {'widget': AdminMarkItUpWidget}}
 
-**Note:** If you use ``MarkupField`` in your model (see below), it is
-  rendered in the admin with an ``AdminMarkItUpWidget`` by default.
+**Note:** If you use `MarkupField`_ in your model, it is rendered in
+  the admin with an ``AdminMarkItUpWidget`` by default.
 
 Using MarkItUp! via templatetags
 ================================
@@ -267,15 +266,15 @@ The MARKITUP_FILTER setting
 ===========================
 
 The ``MARKITUP_FILTER`` setting defines how markup is transformed into
-HTML on your site.
+HTML on your site. This setting is only required if you are using
+``MarkupField`` or MarkItUp! AJAX preview.
 
-``MARKITUP_FILTER`` must be a two-tuple.
-
-The first element must be a string, the Python dotted path to a markup
-filter function.  This function should accept markup as its first
-argument and return HTML.  It may accept other keyword arguments as
-well.  You may parse your markup using any method you choose, as long
-as you can wrap it in a function that meets these criteria.
+``MARKITUP_FILTER`` must be a two-tuple. The first element must be a
+string, the Python dotted path to a markup filter function.  This
+function should accept markup as its first argument and return HTML.
+It may accept other keyword arguments as well.  You may parse your
+markup using any method you choose, as long as you can wrap it in a
+function that meets these criteria.
 
 The second element must be a dictionary of keyword arguments to pass
 to the filter function.  The dictionary may be empty.
