@@ -13,13 +13,13 @@ def _get_render_func(dotted_path, **kwargs):
     return curry(func, **kwargs)
 
 try:
-    render_func = _get_render_func(settings.MARKUP_FILTER[0],
-                                   **settings.MARKUP_FILTER[1])
+    render_func = _get_render_func(settings.MARKITUP_FILTER[0],
+                                   **settings.MARKITUP_FILTER[1])
 except ImportError, e:
-    raise ImproperlyConfigured("Could not import MARKUP_FILTER %s: %s" %
-                               (settings.MARKUP_FILTER, e))
+    raise ImproperlyConfigured("Could not import MARKITUP_FILTER %s: %s" %
+                               (settings.MARKITUP_FILTER, e))
 except AttributeError, e:
-    raise ImproperlyConfigured("MARKUP_FILTER setting is required")
+    raise ImproperlyConfigured("MARKITUP_FILTER setting is required")
 
 class Markup(object):
     def __init__(self, instance, field_name, rendered_field_name):

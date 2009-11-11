@@ -12,4 +12,4 @@ STATIC_ROOT = MEDIA_ROOT
 
 ROOT_URLCONF = 'tests.urls'
 
-MARKUP_FILTER = ('tests.filter.testfilter', {'arg': 'replacement'})
+MARKITUP_FILTER = ('tests.filter.testfilter', {'arg': 'replacement'})

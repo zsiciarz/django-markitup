@@ -1,7 +1,7 @@
 """
 settings for django-markitup
 
-Time-stamp: <2009-11-05 16:28:48 carljm settings.py>
+Time-stamp: <2009-11-11 12:28:49 carljm settings.py>
 
 """
 from django.conf import settings
@@ -9,7 +9,7 @@ import posixpath
 
 
 MARKITUP_PREVIEW_FILTER = getattr(settings, 'MARKITUP_PREVIEW_FILTER',
-                                  getattr(settings, 'MARKUP_FILTER', None))
+                                  getattr(settings, 'MARKITUP_FILTER', None))
 MARKITUP_MEDIA_URL = getattr(settings, 'MARKITUP_MEDIA_URL', settings.MEDIA_URL)
 MARKITUP_SET = getattr(settings, 'MARKITUP_SET', 'markitup/sets/default')
 MARKITUP_SKIN = getattr(settings, 'MARKITUP_SKIN', 'markitup/skins/simple')
