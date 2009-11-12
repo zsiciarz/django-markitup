@@ -2,6 +2,10 @@
 django-markitup changelog
 =========================
 
+2009-11-12 Carl Meyer <carl@dirtcircle.com>
+
+* 0.5.0 release.
+
 2009-11-11 Carl Meyer <carl@dirtcircle.com>
 
 * Changed ``MARKUP_FILTER`` setting to ``MARKITUP_FILTER`` to avoid

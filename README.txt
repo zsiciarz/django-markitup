@@ -59,7 +59,7 @@ When this form is displayed on your site, you must include the form
 media somewhere on the page using ``{{ form.media }}``, or the
 MarkItUpWidget will have no effect.
 
-To use widget in the Django admin::
+To use the widget in the Django admin::
 
     from markitup.widgets import AdminMarkItUpWidget
 
@@ -80,8 +80,8 @@ another)::
     class MyModelAdmin(admin.ModelAdmin):
         formfield_overrides = {models.TextField: {'widget': AdminMarkItUpWidget}}
 
-**Note:** If you use `MarkupField`_ in your model, it is rendered in
-  the admin with an ``AdminMarkItUpWidget`` by default.
+If you use `MarkupField`_ in your model, it is rendered in the admin
+  with an ``AdminMarkItUpWidget`` by default.
 
 Using MarkItUp! via templatetags
 ================================
@@ -100,10 +100,10 @@ Then include the MarkItUp! CSS and Javascript in the <head> of your page::
     {% markitup_media %}
 
 By default the ``markitup_media`` tag also includes jQuery, based on
-the value of your ``JQUERY_URL`` setting, with a fallback to the
-version hosted at Google Ajax APIs (see below). To suppress the
-inclusion of jQuery (if you are already including it yourself), pass
-any non-zero argument to the tag::
+the value of your `JQUERY_URL`_ setting, with a fallback to the
+version hosted at Google Ajax APIs. To suppress the inclusion of
+jQuery (if you are already including it yourself), pass any non-zero
+argument to the tag::
 
     {% markitup_media "no-jquery" %}
 
@@ -116,8 +116,8 @@ template before the ``markitup_editor`` tag is used).
 
 Last, use the ``markitup_editor`` template tag to apply the MarkItUp!
 editor to a textarea in your page. It accepts one argument, the HTML
-id of the textarea. Note that if you are rendering the textarea in the
-usual way via a Django form object, that id value is available as
+id of the textarea. If you are rendering the textarea in the usual way
+via a Django form object, that id value is available as
 ``form.fieldname.auto_id``::
 
     {{ form.fieldname }}

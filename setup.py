@@ -24,7 +24,7 @@ long_description = open('README.txt').read() + open('CHANGELOG.txt').read()
 
 setup(
     name='django-markitup',
-    version='0.5.0dev%s' % hgrev,
+    version='0.5.0.post%s' % hgrev,
     description='Markup handling for Django using the MarkItUp! universal markup editor',
     long_description=long_description,
     author='Carl Meyer',
