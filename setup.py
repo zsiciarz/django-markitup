@@ -20,7 +20,9 @@ try:
 except IOError:
     hgrev = ''
     
-long_description = open('README.txt').read() + open('CHANGELOG.txt').read()
+long_description = (open('README.txt').read() + 
+                    open('CHANGES.txt').read() +
+                    open('TODO.txt').read())
 
 setup(
     name='django-markitup',

@@ -1,0 +1,29 @@
+CHANGES
+=======
+
+tip (unreleased)
+----------------
+
+
+0.5 (2009.11.12)
+----------------
+
+- Added ``MarkupField`` from http://github.com/carljm/django-markupfield
+  (thanks Mike Korobov)
+
+- Deprecated ``markitup_head`` template tag in favor of ``markitup_media``.
+
+- Added ``MARKITUP_MEDIA_URL`` setting to override base of relative media
+  URL paths.
+
+0.3 (2009.11.04)
+----------------
+
+- added template-tag method for applying MarkItUp! editor (inspired by
+  django-wysiwyg
+
+0.2 (2009.03.18)
+----------------
+
+- initial release
+
