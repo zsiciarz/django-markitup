@@ -1,8 +1,9 @@
 include AUTHORS.txt
-include CHANGELOG.txt
+include CHANGES.txt
 include LICENSE.txt
 include MANIFEST.in
 include README.txt
+include TODO.txt
 include HGREV
 recursive-include markitup/templates *.html
 recursive-include markitup/media *.html *.css *.js *.txt *.png
