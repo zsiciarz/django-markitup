@@ -4,6 +4,12 @@ CHANGES
 tip (unreleased)
 ----------------
 
+0.5.1 (2009.11.18)
+------------------
+
+- Added empty ``models.py`` file so ``markitup`` is properly registered in
+  ``INSTALLED_APPS``. Fixes issue with ``django-staticfiles`` tip not
+  finding media.
 
 0.5 (2009.11.12)
 ----------------
