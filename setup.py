@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import setup
 import subprocess
 import os.path
 
@@ -32,7 +32,7 @@ setup(
     author='Carl Meyer',
     author_email='carl@dirtcircle.com',
     url='http://bitbucket.org/carljm/django-markitup/',
-    packages=find_packages(),
+    packages=['markitup', 'markitup.templatetags'],
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Web Environment',

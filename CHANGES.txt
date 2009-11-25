@@ -4,6 +4,11 @@ CHANGES
 tip (unreleased)
 ----------------
 
+0.5.2 (2009.11.24)
+------------------
+
+- Fix setup.py so ``tests`` package is not installed.
+
 0.5.1 (2009.11.18)
 ------------------
 
