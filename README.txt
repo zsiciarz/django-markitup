@@ -4,7 +4,7 @@ django-markitup
 
 A Django reusable application for end-to-end markup handling. Includes:
 
-* Easy integration of the MarkItUp_ markup editor widget (by Jay
+* Easy integration of the `MarkItUp!`_ markup editor widget (by Jay
   Salvat) in Django projects, with server-side support for MarkItUp!'s
   AJAX preview. Plug in MarkItUp! via form widget or template tags.
 
@@ -13,7 +13,7 @@ A Django reusable application for end-to-end markup handling. Includes:
   assumption that disk space is cheaper than CPU cycles in a web
   application.
 
-.. _MarkItUp: http://markitup.jaysalvat.com/
+.. _MarkItUp!: http://markitup.jaysalvat.com/
 
 Installation
 ============
@@ -24,11 +24,11 @@ Install from PyPI with ``easy_install`` or ``pip``::
 
 or get the `in-development version`_::
 
-    pip install django-markitup==dev
+    pip install django-markitup==tip
 
-.. _in-development version: http://bitbucket.org/carljm/django-markitup/get/tip.gz#egg=django_markitup-dev
+.. _in-development version: http://bitbucket.org/carljm/django-markitup/get/tip.gz#egg=django_markitup-tip
 
-To use django-markitup in your Django project:
+To use ``django-markitup`` in your Django project:
 
     1. Add ``'markitup'`` to your ``INSTALLED_APPS`` setting.
 
@@ -42,6 +42,14 @@ To use django-markitup in your Django project:
 
     4. If you want to use AJAX-based preview, add 
           ``url(r'^markitup/', include('markitup.urls')`` in your root URLconf.
+
+Dependencies
+------------
+
+``django-markitup`` requires `Django`_ 1.1 or later. `MarkItUp!`_ is
+not an external dependency; it is bundled with ``django-markitup``.
+
+.. _Django: http://www.djangoproject.com/
 
 Using the MarkItUp! widget
 ==========================
