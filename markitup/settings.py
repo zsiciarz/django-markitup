@@ -10,6 +10,10 @@ import posixpath
 
 MARKITUP_PREVIEW_FILTER = getattr(settings, 'MARKITUP_PREVIEW_FILTER',
                                   getattr(settings, 'MARKITUP_FILTER', None))
+
+# Automaticly enable the markitup preview
+MARKITUP_PREVIEW_AUTO = getattr(settings, 'MARKITUP_PREVIEW_AUTO', False)
+
 MARKITUP_MEDIA_URL = getattr(settings, 'MARKITUP_MEDIA_URL', settings.MEDIA_URL)
 MARKITUP_SET = getattr(settings, 'MARKITUP_SET', 'markitup/sets/default')
 MARKITUP_SKIN = getattr(settings, 'MARKITUP_SKIN', 'markitup/skins/simple')

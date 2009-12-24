@@ -58,11 +58,18 @@ class MarkItUpWidget(MarkupTextarea):
 
     def render(self, name, value, attrs=None):
         html = super(MarkItUpWidget, self).render(name, value, attrs)
+
+        if settings.MARKITUP_PREVIEW_AUTO:
+            preview_auto = "$('a[title=\"Preview\"]').trigger('mouseup');"
+        else: preview_auto = ''
+
         html += ('<script type="text/javascript">'
                  '$(document).ready(function() {'
-                 '  $("#%s").markItUp(mySettings);'
+                 '  $("#%(id)s").markItUp(mySettings);'
+                 '  %(preview_auto)s '
                  '});'
-                 '</script>' % attrs['id'])
+                 '</script>' % {'id': attrs['id'],
+                                'preview_auto': preview_auto })
         return mark_safe(html)
 
 
@@ -70,6 +77,6 @@ class AdminMarkItUpWidget(MarkItUpWidget, AdminTextareaWidget):
     """
     Add vLargeTextarea class to MarkItUpWidget so it looks more
     similar to other admin textareas.
-    
+
     """
     pass
