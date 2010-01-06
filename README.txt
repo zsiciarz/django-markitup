@@ -325,6 +325,12 @@ different from the filter used for rendering markup in a
 ``MarkupField``. It has the same format as ``MARKITUP_FILTER``; by
 default it is set equal to ``MARKITUP_FILTER``.
 
+MARKITUP_AUTO_PREVIEW
+---------------------
+
+If set to ``True``, the preview window will be activated by
+default. Defaults to ``False``.
+
 JQUERY_URL
 ----------
 

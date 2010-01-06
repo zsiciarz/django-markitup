@@ -1,7 +1,7 @@
 """
 widgets for django-markitup
 
-Time-stamp: <2009-11-06 14:28:29 carljm widgets.py>
+Time-stamp: <2010-01-06 11:46:37 carljm widgets.py>
 
 """
 from django import forms
@@ -58,11 +58,18 @@ class MarkItUpWidget(MarkupTextarea):
 
     def render(self, name, value, attrs=None):
         html = super(MarkItUpWidget, self).render(name, value, attrs)
+
+        if settings.MARKITUP_AUTO_PREVIEW:
+            auto_preview = "$('a[title=\"Preview\"]').trigger('mouseup');"
+        else: auto_preview = ''
+
         html += ('<script type="text/javascript">'
                  '$(document).ready(function() {'
-                 '  $("#%s").markItUp(mySettings);'
+                 '  $("#%(id)s").markItUp(mySettings);'
+                 '  %(auto_preview)s '
                  '});'
-                 '</script>' % attrs['id'])
+                 '</script>' % {'id': attrs['id'],
+                                'auto_preview': auto_preview })
         return mark_safe(html)
 
 
@@ -70,6 +77,6 @@ class AdminMarkItUpWidget(MarkItUpWidget, AdminTextareaWidget):
     """
     Add vLargeTextarea class to MarkItUpWidget so it looks more
     similar to other admin textareas.
-    
+
     """
     pass

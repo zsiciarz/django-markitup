@@ -170,16 +170,28 @@ class TemplatetagTests(MIUTestCase):
 
                       
 class RenderTests(MIUTestCase):
+    look_for = '$("#my_id").markItUp(mySettings);'
+    
     def test_widget_render(self):
         widget = MarkItUpWidget()
-        self.assertIn('$("#my_id").markItUp(mySettings);',
+        self.assertIn(self.look_for,
                       widget.render('name', 'value', {'id': 'my_id'}))
 
     def test_templatetag_render(self):
         template = """{% load markitup_tags %}{% markitup_editor "my_id" %}"""
-        self.assertIn('$("#my_id").markItUp(mySettings);',
+        self.assertIn(self.look_for,
                       self.render(template))
 
+class AutoPreviewRenderTests(RenderTests):
+    look_for = "$('a[title=\"Preview\"]').trigger('mouseup');"
+    
+    def setUp(self):
+        self._old_auto = settings.MARKITUP_AUTO_PREVIEW
+        settings.MARKITUP_AUTO_PREVIEW = True
+
+    def tearDown(self):
+        settings.MARKITUP_AUTO_PREVIEW = self._old_auto
+    
 
 class TemplatetagMediaUrlTests(MIUTestCase):
     prefix = '/media'

@@ -1,5 +1,6 @@
 <script type="text/javascript">
 $(document).ready(function() {
   $("#{{ textarea_id }}").markItUp(mySettings);
+  {% if AUTO_PREVIEW %}$('a[title="Preview"]').trigger('mouseup');{% endif %}
 });
 </script>

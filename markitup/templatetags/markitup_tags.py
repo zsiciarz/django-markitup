@@ -40,4 +40,5 @@ def markitup_css():
 
 @register.inclusion_tag('markitup/editor.html')
 def markitup_editor(textarea_id):
-    return {'textarea_id': textarea_id}
+    return {'textarea_id': textarea_id,
+            'AUTO_PREVIEW': settings.MARKITUP_AUTO_PREVIEW}
