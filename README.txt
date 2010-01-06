@@ -68,6 +68,11 @@ When this form is displayed on your site, you must include the form
 media somewhere on the page using ``{{ form.media }}``, or the
 MarkItUpWidget will have no effect.
 
+MarkItUpWidget accepts three optional keyword arguments:
+``markitup_set`` and ``markitup_skin`` (see `Choosing a MarkItUp!
+button set and skin`_) and ``auto_preview`` (to override the value of
+the `MARKITUP_AUTO_PREVIEW`_ setting).
+
 To use the widget in the Django admin::
 
     from markitup.widgets import AdminMarkItUpWidget
@@ -135,6 +140,10 @@ via a Django form object, that id value is available as
 
 You can use ``markitup_editor`` on as many different textareas as you
 like.
+
+``markitup_editor`` accepts an optional second parameter, which can be
+either ``"auto_preview"`` or ``"no_auto_preview"`` to override the
+value of the `MARKITUP_AUTO_PREVIEW`_ setting.
 
 The actual HTML included by these templatetags is defined by the
 contents of the templates ``markitup/include_css.html``,

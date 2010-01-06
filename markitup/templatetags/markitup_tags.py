@@ -39,6 +39,10 @@ def markitup_css():
     return register._markitup_context
 
 @register.inclusion_tag('markitup/editor.html')
-def markitup_editor(textarea_id):
+def markitup_editor(textarea_id, auto_preview=None):
+    if auto_preview is not None:
+        auto_preview = (auto_preview == 'auto_preview')
+    else:
+        auto_preview = settings.MARKITUP_AUTO_PREVIEW
     return {'textarea_id': textarea_id,
-            'AUTO_PREVIEW': settings.MARKITUP_AUTO_PREVIEW}
+            'AUTO_PREVIEW': auto_preview}

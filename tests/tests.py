@@ -137,9 +137,11 @@ class PreviewTests(TestCase):
 
 
 class MIUTestCase(TestCase):
-    def assertIn(self, needle, haystack):
-        self.failUnless(needle in haystack,
-                        "'%s' not in '%s'" % (needle, haystack))
+    def assertIn(self, needle, haystack, reverse=False):
+        func = reverse and self.failIf or self.failUnless
+        descrip = reverse and 'in' or 'not in'
+        func(needle in haystack,
+             "'%s' %s '%s'" % (needle, descrip, haystack))
 
     def render(self, template_string, context_dict=None):
         """A shortcut for testing template output."""
@@ -171,6 +173,7 @@ class TemplatetagTests(MIUTestCase):
                       
 class RenderTests(MIUTestCase):
     look_for = '$("#my_id").markItUp(mySettings);'
+    auto_preview_override = True
     
     def test_widget_render(self):
         widget = MarkItUpWidget()
@@ -182,8 +185,26 @@ class RenderTests(MIUTestCase):
         self.assertIn(self.look_for,
                       self.render(template))
 
-class AutoPreviewRenderTests(RenderTests):
+    def test_per_widget_auto_preview_override(self):
+        widget = MarkItUpWidget(auto_preview=self.auto_preview_override)
+        self.assertIn(AutoPreviewSettingTests.look_for,
+                      widget.render('name', 'value', {'id': 'my_id'}),
+                      reverse=not self.auto_preview_override)
+
+    def test_per_ttag_auto_preview_override(self):
+        if self.auto_preview_override:
+            arg = "auto_preview"
+        else:
+            arg = "no_auto_preview"
+        template = """{%% load markitup_tags %%}{%% markitup_editor "my_id" "%s" %%}""" % (arg,)
+        self.assertIn(AutoPreviewSettingTests.look_for,
+                      self.render(template),
+                      reverse=not self.auto_preview_override)
+
+
+class AutoPreviewSettingTests(RenderTests):
     look_for = "$('a[title=\"Preview\"]').trigger('mouseup');"
+    auto_preview_override = False
     
     def setUp(self):
         self._old_auto = settings.MARKITUP_AUTO_PREVIEW

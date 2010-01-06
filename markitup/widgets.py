@@ -1,7 +1,7 @@
 """
 widgets for django-markitup
 
-Time-stamp: <2010-01-06 11:46:37 carljm widgets.py>
+Time-stamp: <2010-01-06 12:31:06 carljm widgets.py>
 
 """
 from django import forms
@@ -42,9 +42,13 @@ class MarkItUpWidget(MarkupTextarea):
     """
     def __init__(self, attrs=None,
                  markitup_set=None,
-                 markitup_skin=None):
+                 markitup_skin=None,
+                 auto_preview=None):
         self.miu_set = absolute_url(markitup_set or settings.MARKITUP_SET)
         self.miu_skin = absolute_url(markitup_skin or settings.MARKITUP_SKIN)
+        if auto_preview is None:
+            auto_preview = settings.MARKITUP_AUTO_PREVIEW
+        self.auto_preview = auto_preview
         super(MarkItUpWidget, self).__init__(attrs)
 
     def _media(self):
@@ -59,7 +63,7 @@ class MarkItUpWidget(MarkupTextarea):
     def render(self, name, value, attrs=None):
         html = super(MarkItUpWidget, self).render(name, value, attrs)
 
-        if settings.MARKITUP_AUTO_PREVIEW:
+        if self.auto_preview:
             auto_preview = "$('a[title=\"Preview\"]').trigger('mouseup');"
         else: auto_preview = ''
 
