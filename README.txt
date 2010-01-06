@@ -41,7 +41,7 @@ To use ``django-markitup`` in your Django project:
     3. Set `the MARKITUP_FILTER setting`_.
 
     4. If you want to use AJAX-based preview, add 
-          ``url(r'^markitup/', include('markitup.urls')`` in your root URLconf.
+          ``url(r'^markitup/', include('markitup.urls'))`` in your root URLconf.
 
 Dependencies
 ------------
@@ -60,8 +60,9 @@ can be used like any other Django custom widget.
 To assign it to a form field::
 
     from markitup.widgets import MarkItUpWidget
-    ...
-    content = forms.TextField(widget=MarkItUpWidget())
+    
+    class MyForm(forms.Form):
+        content = forms.CharField(widget=MarkItUpWidget())
 
 When this form is displayed on your site, you must include the form
 media somewhere on the page using ``{{ form.media }}``, or the
