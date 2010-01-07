@@ -97,3 +97,11 @@ class MarkupField(models.TextField):
 # register MarkupField to use the custom widget in the Admin
 from django.contrib.admin.options import FORMFIELD_FOR_DBFIELD_DEFAULTS
 FORMFIELD_FOR_DBFIELD_DEFAULTS[MarkupField] = {'widget': widgets.AdminMarkItUpWidget}
+
+# allow South to handle MarkupField smoothly
+try:
+    from south.modelsinspector import add_introspection_rules
+    add_introspection_rules(patterns=['markitup\.fields\.'])
+except ImportError:
+    pass
+
