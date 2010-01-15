@@ -1,9 +1,9 @@
 // ----------------------------------------------------------------------------
 // markItUp! Universal MarkUp Engine, JQuery plugin
-// v 1.1.5
+// v 1.1.6
 // Dual licensed under the MIT and GPL licenses.
 // ----------------------------------------------------------------------------
-// Copyright (C) 2007-2008 Jay Salvat
+// Copyright (C) 2007-2009 Jay Salvat
 // http://markitup.jaysalvat.com/
 // ----------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -421,13 +421,15 @@
 						} else {
 							iFrame.insertBefore(header);
 						}	
-						previewWindow = iFrame[iFrame.length-1].contentWindow || frame[iFrame.length-1];
+						previewWindow = iFrame[iFrame.length - 1].contentWindow || frame[iFrame.length - 1];
 					}
 				} else if (altKey === true) {
+					// Thx Stephen M. Redd for the IE8 fix
 					if (iFrame) {
 						iFrame.remove();
+					} else {
+						previewWindow.close();
 					}
-					previewWindow.close();
 					previewWindow = iFrame = false;
 				}
 				if (!options.previewAutoRefresh) {
@@ -437,46 +439,49 @@
 
 			// refresh Preview window
 			function refreshPreview() {
+ 				renderPreview();
+			}
+
+			function renderPreview() {		
+				var phtml;
+				if (options.previewParserPath !== '') {
+					$.ajax( {
+						type: 'POST',
+						url: options.previewParserPath,
+						data: options.previewParserVar+'='+encodeURIComponent($$.val()),
+						success: function(data) {
+							writeInPreview( localize(data, 1) ); 
+						}
+					} );
+				} else {
+					if (!template) {
+						$.ajax( {
+							url: options.previewTemplatePath,
+							success: function(data) {
+								writeInPreview( localize(data, 1).replace(/<!-- content -->/g, $$.val()) );
+							}
+						} );
+					}
+				}
+				return false;
+			}
+			
+			function writeInPreview(data) {
 				if (previewWindow.document) {			
 					try {
 						sp = previewWindow.document.documentElement.scrollTop
 					} catch(e) {
 						sp = 0;
-					}					
+					}	
+					var h = "test";
 					previewWindow.document.open();
-					previewWindow.document.write(renderPreview());
+					previewWindow.document.write(data);
 					previewWindow.document.close();
 					previewWindow.document.documentElement.scrollTop = sp;
 				}
 				if (options.previewInWindow) {
 					previewWindow.focus();
 				}
-			}
-
-			function renderPreview() {				
-				if (options.previewParserPath !== '') {
-					$.ajax( {
-						type: 'POST',
-						async: false,
-						url: options.previewParserPath,
-						data: options.previewParserVar+'='+encodeURIComponent($$.val()),
-						success: function(data) {
-							phtml = localize(data, 1); 
-						}
-					} );
-				} else {
-					if (!template) {
-						$.ajax( {
-							async: false,
-							url: options.previewTemplatePath,
-							success: function(data) {
-								template = localize(data, 1); 
-							}
-						} );
-					}
-					phtml = template.replace(/<!-- content -->/g, $$.val());
-				}
-				return phtml;
 			}
 			
 			// set keys pressed
@@ -496,10 +501,12 @@
 					}
 					if (e.keyCode === 13 || e.keyCode === 10) { // Enter key
 						if (ctrlKey === true) {  // Enter + Ctrl
+							console.log("onCtrlEnter");
 							ctrlKey = false;
 							markup(options.onCtrlEnter);
 							return options.onCtrlEnter.keepDefault;
 						} else if (shiftKey === true) { // Enter + Shift
+							console.log("onShiftEnter");
 							shiftKey = false;
 							markup(options.onShiftEnter);
 							return options.onShiftEnter.keepDefault;
