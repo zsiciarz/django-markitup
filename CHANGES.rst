@@ -6,6 +6,8 @@ tip (unreleased)
 
 - update to jQuery 1.4 and MarkItUp! 1.1.6
 
+- Add auto_preview option.
+
 - Ajax preview view now uses RequestContext, and additionally passes
   ``MARKITUP_MEDIA_URL`` into the template context. (Previously,
   ``MARKITUP_MEDIA_URL`` was passed as ``MEDIA_URL`` and RequestContext was
