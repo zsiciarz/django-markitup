@@ -66,10 +66,19 @@ class MarkupDescriptor(object):
             obj.__dict__[self.field.name] = value
 
 class MarkupField(models.TextField):
+    def __init__(self, *args, **kwargs):
+        # for South FakeORM compatibility: the frozen version of a
+        # MarkupField can't try to add a _rendered field, because the
+        # _rendered field itself is frozen as well. See introspection
+        # rules below.
+        self.add_rendered_field = not kwargs.pop('no_rendered_field', False)
+        super(MarkupField, self).__init__(*args, **kwargs)
+    
     def contribute_to_class(self, cls, name):
-        rendered_field = models.TextField(editable=False)
-        rendered_field.creation_counter = self.creation_counter+1
-        cls.add_to_class(_rendered_field_name(name), rendered_field)
+        if self.add_rendered_field:
+            rendered_field = models.TextField(editable=False)
+            rendered_field.creation_counter = self.creation_counter+1
+            cls.add_to_class(_rendered_field_name(name), rendered_field)
         super(MarkupField, self).contribute_to_class(cls, name)
         setattr(cls, self.name, MarkupDescriptor(self))
 
@@ -101,7 +110,14 @@ FORMFIELD_FOR_DBFIELD_DEFAULTS[MarkupField] = {'widget': widgets.AdminMarkItUpWi
 # allow South to handle MarkupField smoothly
 try:
     from south.modelsinspector import add_introspection_rules
-    add_introspection_rules(patterns=['markitup\.fields\.'])
+    # For a normal MarkupField, the add_rendered_field attribute is
+    # always True, which means no_rendered_field arg will always be
+    # True in a frozen MarkupField, which is what we want.
+    add_introspection_rules(rules=[((MarkupField,),
+                                    [],
+                                    {'no_rendered_field': ('add_rendered_field',
+                                                           {})})],
+                            patterns=['markitup\.fields\.'])
 except ImportError:
     pass
 

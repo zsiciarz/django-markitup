@@ -1,16 +1,20 @@
 from __future__ import with_statement
 import re
 import warnings
+
 from django.template import Template, Context, get_library
 from django.test import TestCase, Client
 from django.conf import settings as django_settings
-from markitup import settings
-from markitup.widgets import MarkItUpWidget, MarkupTextarea, AdminMarkItUpWidget
 from django.templatetags.markitup_tags import _get_markitup_context
 from django.core import serializers
 from django.forms.models import modelform_factory
+from django.db.models.fields import FieldDoesNotExist
+
 from django.contrib import admin
+
+from markitup import settings
 from markitup.fields import MarkupField
+from markitup.widgets import MarkItUpWidget, MarkupTextarea, AdminMarkItUpWidget
 
 from models import Post
 
@@ -270,7 +274,7 @@ class TemplatetagMediaUrlTests(MIUTestCase):
     def test_all_media(self):
         out = """<link href="%(prefix)s/markitup/skins/simple/style.css" type="text/css" media="screen" rel="stylesheet" />
 <link href="%(prefix)s/markitup/sets/default/style.css" type="text/css" media="screen" rel="stylesheet" />
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
 <script type="text/javascript" src="%(prefix)s/markitup/jquery.markitup.js"></script>
 <script type="text/javascript" src="%(prefix)s/markitup/sets/default/set.js"></script>""" % {'prefix': self.prefix}
         self.assertEquals(self._get_media(), out)
@@ -357,3 +361,17 @@ class TemplatetagAlternateMediaUrlTests(AlternateMediaUrlTests,
 class WidgetAlternateMediaUrlTests(AlternateMediaUrlTests,
                                    WidgetMediaUrlTests):
     pass
+
+if 'south' in django_settings.INSTALLED_APPS:
+    class SouthFreezingTests(TestCase):
+        def test_introspector_adds_no_rendered_field(self):
+            from south.modelsinspector import introspector
+            mf = Post._meta.get_field('body')
+            args, kwargs = introspector(mf)
+            self.assertEquals(kwargs['no_rendered_field'], 'True')
+        
+        def test_no_rendered_field_works(self):
+            from models import NoRendered
+            self.assertRaises(FieldDoesNotExist,
+                              NoRendered._meta.get_field,
+                              '_body_rendered')
