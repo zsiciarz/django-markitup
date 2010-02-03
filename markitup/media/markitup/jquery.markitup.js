@@ -1,9 +1,9 @@
 // ----------------------------------------------------------------------------
 // markItUp! Universal MarkUp Engine, JQuery plugin
-// v 1.1.6
+// v 1.1.6.1
 // Dual licensed under the MIT and GPL licenses.
 // ----------------------------------------------------------------------------
-// Copyright (C) 2007-2009 Jay Salvat
+// Copyright (C) 2007-2010 Jay Salvat
 // http://markitup.jaysalvat.com/
 // ----------------------------------------------------------------------------
 // Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -501,12 +501,10 @@
 					}
 					if (e.keyCode === 13 || e.keyCode === 10) { // Enter key
 						if (ctrlKey === true) {  // Enter + Ctrl
-							console.log("onCtrlEnter");
 							ctrlKey = false;
 							markup(options.onCtrlEnter);
 							return options.onCtrlEnter.keepDefault;
 						} else if (shiftKey === true) { // Enter + Shift
-							console.log("onShiftEnter");
 							shiftKey = false;
 							markup(options.onShiftEnter);
 							return options.onShiftEnter.keepDefault;
