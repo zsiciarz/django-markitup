@@ -174,7 +174,14 @@ class TemplatetagTests(MIUTestCase):
             warnings.resetwarnings()
             self.assertIn('jquery.markitup.js', out)
 
-                      
+
+class TemplatefilterTests(MIUTestCase):
+    def test_render_markup(self):
+        tpl_string = "{% load markitup_tags %}{{ content|render_markup }}"
+        self.assertEquals('replacement text', self.render(tpl_string,
+                                                          {'content': 'replace this text'}))
+        
+            
 class RenderTests(MIUTestCase):
     look_for = '$("#my_id").markItUp(mySettings);'
     auto_preview_override = True

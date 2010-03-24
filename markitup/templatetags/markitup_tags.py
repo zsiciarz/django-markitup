@@ -3,8 +3,13 @@ from django import template
 from django.conf import settings as django_settings
 from markitup import settings
 from markitup.util import absolute_url
+from markitup.fields import render_func
 
 register = template.Library()
+
+@register.filter
+def render_markup(content):
+    return render_func(content)
 
 # we do some funny stuff here for testability (the tests need to be
 # able to force a recalculation of this context)

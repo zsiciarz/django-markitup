@@ -313,6 +313,20 @@ kwargs dictionary must be empty in this case.)
 ``django-markitup`` provides one sample rendering function,
 ``render_rest`` in the ``markitup.renderers`` module.
 
+render_markup template filter
+=============================
+
+If you have set `the MARKITUP_FILTER setting`_ and use the MarkItUp!
+AJAX preview, but don't wish to store rendered markup in the database
+with `MarkupField`_ (or are using third-party models that don't use
+`MarkupField`_), you may want a convenient way to render content in
+your templates using your MARKITUP_FILTER function. For this you can
+use the ``render_markup`` template filter::
+
+    {% load markitup_tags %}
+    
+    {{ post.content|render_markup }}
+
 Other settings
 ==============
 
