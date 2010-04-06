@@ -1,6 +1,6 @@
 // ----------------------------------------------------------------------------
 // markItUp! Universal MarkUp Engine, JQuery plugin
-// v 1.1.6.1
+// v 1.1.6.2
 // Dual licensed under the MIT and GPL licenses.
 // ----------------------------------------------------------------------------
 // Copyright (C) 2007-2010 Jay Salvat
@@ -162,11 +162,11 @@
 							return false;
 						}).click(function() {
 							return false;
-						}).mouseup(function() {
+						}).mousedown(function() {
 							if (button.call) {
 								eval(button.call)();
 							}
-							markup(button);
+							setTimeout(function() { markup(button) },1);
 							return false;
 						}).hover(function() {
 								$('> ul', this).show();
@@ -402,7 +402,7 @@
 					} else { // opera
 						caretPosition = textarea.selectionStart;
 					}
-				} else { // gecko
+				} else { // gecko & webkit
 					caretPosition = textarea.selectionStart;
 					selection = $$.val().substring(caretPosition, textarea.selectionEnd);
 				} 
@@ -473,7 +473,6 @@
 					} catch(e) {
 						sp = 0;
 					}	
-					var h = "test";
 					previewWindow.document.open();
 					previewWindow.document.write(data);
 					previewWindow.document.close();
@@ -495,7 +494,9 @@
 						li = $("a[accesskey="+String.fromCharCode(e.keyCode)+"]", header).parent('li');
 						if (li.length !== 0) {
 							ctrlKey = false;
-							li.triggerHandler('mouseup');
+							setTimeout(function() {
+								li.triggerHandler('mousedown');
+							},1);
 							return false;
 						}
 					}
@@ -537,7 +538,7 @@
 
 	$.fn.markItUpRemove = function() {
 		return this.each(function() {
-				$$ = $(this).unbind().removeClass('markItUpEditor');
+				var $$ = $(this).unbind().removeClass('markItUpEditor');
 				$$.parent('div').parent('div.markItUp').parent('div').replaceWith($$);
 			}
 		);
