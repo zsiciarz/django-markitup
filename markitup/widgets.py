@@ -68,10 +68,12 @@ class MarkItUpWidget(MarkupTextarea):
         else: auto_preview = ''
 
         html += ('<script type="text/javascript">'
+                '(function($) { '
                  '$(document).ready(function() {'
                  '  $("#%(id)s").markItUp(mySettings);'
                  '  %(auto_preview)s '
                  '});'
+                 '})(jQuery);'
                  '</script>' % {'id': attrs['id'],
                                 'auto_preview': auto_preview })
         return mark_safe(html)
