@@ -4,6 +4,12 @@ CHANGES
 tip (unreleased)
 ----------------
 
+- wrap jQuery usage in anonymous function, to be more robust against other
+  JS framework code on the page (including other jQuerys).  Thanks Mikhael
+  Korneev.
+
+- upgrade to MarkItUp! 1.1.7
+
 - add render_markup template filter
 
 - update to jQuery 1.4 and MarkItUp! 1.1.6
