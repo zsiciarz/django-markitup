@@ -5,10 +5,11 @@ import warnings
 from django.template import Template, Context, get_library
 from django.test import TestCase, Client
 from django.conf import settings as django_settings
-from django.templatetags.markitup_tags import _get_markitup_context
+from markitup.templatetags.markitup_tags import _get_markitup_context
 from django.core import serializers
 from django.forms.models import modelform_factory
 from django.db.models.fields import FieldDoesNotExist
+from django import VERSION
 
 from django.contrib import admin
 
@@ -223,7 +224,12 @@ class AutoPreviewSettingTests(RenderTests):
 
     def tearDown(self):
         settings.MARKITUP_AUTO_PREVIEW = self._old_auto
-    
+
+# format of arg to get_library changed in 1.2
+if VERSION < (1,2):
+    markitup_tags = 'django.templatetags.markitup_tags'
+else:
+    markitup_tags = 'markitup_tags'
 
 class TemplatetagMediaUrlTests(MIUTestCase):
     prefix = '/media'
@@ -232,7 +238,9 @@ class TemplatetagMediaUrlTests(MIUTestCase):
     # templatetag methods
     def _reset_context(self):
         # monkeypatch a forced recalculation of the template context
-        tags = get_library('django.templatetags.markitup_tags')
+        # format of get_library arg changed in 1.2
+        
+        tags = get_library(markitup_tags)
         tags._markitup_context = _get_markitup_context()
 
     multiple_newlines_re = re.compile('\n+')
