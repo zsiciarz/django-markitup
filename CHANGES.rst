@@ -4,6 +4,8 @@ CHANGES
 tip (unreleased)
 ----------------
 
+- remove previously-deprecated markitup_head template tag
+
 - wrap jQuery usage in anonymous function, to be more robust against other
   JS framework code on the page (including other jQuerys).  Thanks Mikhael
   Korneev.

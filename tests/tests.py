@@ -1,6 +1,4 @@
-from __future__ import with_statement
 import re
-import warnings
 
 from django.template import Template, Context, get_library
 from django.test import TestCase, Client
@@ -156,24 +154,6 @@ class MIUTestCase(TestCase):
         c = Context(context_dict)
         t = Template(template_string)
         return t.render(c).strip()
-
-
-class TemplatetagTests(MIUTestCase):
-    def test_markitup_head_deprecation_warning(self):
-        tpl_string = "{% load markitup_tags %}{% markitup_head %}"
-        if hasattr(warnings, 'catch_warnings'):
-            with warnings.catch_warnings(record=True) as w:
-                out = self.render(tpl_string)
-                # make sure it still works
-                self.assertIn('jquery.markitup.js', out)
-                self.assertEquals(len(w), 1)
-                self.failUnless(issubclass(w[-1].category, DeprecationWarning))
-        else:
-            # Python < 2.6, we can't catch warnings, just test it works
-            warnings.simplefilter('ignore', DeprecationWarning)
-            out = self.render(tpl_string)
-            warnings.resetwarnings()
-            self.assertIn('jquery.markitup.js', out)
 
 
 class TemplatefilterTests(MIUTestCase):
