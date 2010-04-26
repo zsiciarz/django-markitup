@@ -4,6 +4,9 @@ CHANGES
 tip (unreleased)
 ----------------
 
+0.6.0 (2010.04.26)
+------------------
+
 - remove previously-deprecated markitup_head template tag
 
 - wrap jQuery usage in anonymous function, to be more robust against other

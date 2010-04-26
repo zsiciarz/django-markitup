@@ -26,7 +26,7 @@ long_description = (open('README.rst').read() +
 
 setup(
     name='django-markitup',
-    version='0.5.2.post%s' % hgrev,
+    version='0.6.0',
     description='Markup handling for Django using the MarkItUp! universal markup editor',
     long_description=long_description,
     author='Carl Meyer',
