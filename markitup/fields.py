@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.db import models
-from django.utils.safestring import mark_safe
+from django.utils.safestring import mark_safe, SafeData
 from django.utils.functional import curry
 from django.core.exceptions import ImproperlyConfigured
 from markitup import widgets
@@ -21,7 +21,7 @@ except ImportError, e:
 except AttributeError, e:
     raise ImproperlyConfigured("MARKITUP_FILTER setting is required")
 
-class Markup(object):
+class Markup(SafeData):
     def __init__(self, instance, field_name, rendered_field_name):
         # instead of storing actual values store a reference to the instance
         # along with field names, this makes assignment possible

@@ -7,6 +7,7 @@ from markitup.templatetags.markitup_tags import _get_markitup_context
 from django.core import serializers
 from django.forms.models import modelform_factory
 from django.db.models.fields import FieldDoesNotExist
+from django.utils.safestring import mark_safe
 from django import VERSION
 
 from django.contrib import admin
@@ -57,6 +58,16 @@ class MarkupFieldTests(TestCase):
         def _invalid_assignment():
             self.post.body.rendered = 'this should fail'
         self.assertRaises(AttributeError, _invalid_assignment)
+
+    def testMarkSafe(self):
+        """
+        Calling ``mark_safe`` on a ``Markup`` object should have no
+        effect, as the ``Markup`` object already handles marking the
+        rendered HTML safe on access.
+
+        """
+        self.post.body = mark_safe(self.post.body)
+        self.assertEquals(self.post.body.raw, 'replace this text')
 
 # TODO
 #    def testOverrideFilter(self):

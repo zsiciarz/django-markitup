@@ -4,6 +4,8 @@ CHANGES
 tip (unreleased)
 ----------------
 
+- prevent mark_safe from mangling Markup objects.
+
 0.6.0 (2010.04.26)
 ------------------
 
