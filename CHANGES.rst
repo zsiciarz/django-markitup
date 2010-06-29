@@ -4,6 +4,10 @@ CHANGES
 tip (unreleased)
 ----------------
 
+- Added markitup set for reST. Thanks Jannis Leidel.
+
+- fixed reST rendered to not strip initial headline. Thanks Jannis Leidel.
+
 - prevent mark_safe from mangling Markup objects.
 
 0.6.0 (2010.04.26)
