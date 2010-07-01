@@ -1,12 +1,12 @@
 CHANGES
 =======
 
-tip (unreleased)
-----------------
+0.6.1 (2010.07.01)
+------------------
 
 - Added markitup set for reST. Thanks Jannis Leidel.
 
-- fixed reST rendered to not strip initial headline. Thanks Jannis Leidel.
+- fixed reST renderer to not strip initial headline. Thanks Jannis Leidel.
 
 - prevent mark_safe from mangling Markup objects.
 
@@ -60,7 +60,7 @@ tip (unreleased)
 ----------------
 
 - added template-tag method for applying MarkItUp! editor (inspired by
-  django-wysiwyg
+  django-wysiwyg)
 
 0.2 (2009.03.18)
 ----------------
