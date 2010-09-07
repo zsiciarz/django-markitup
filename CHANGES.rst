@@ -4,6 +4,10 @@ CHANGES
 tip (unreleased)
 ----------------
 
+- enforce minimum length of 3 characters for MarkItUp!-inserted h1 and h2
+  underline-style headers (works around bug in python-markdown).  Thanks
+  Daemian Mack for the report.
+
 0.6.1 (2010.07.01)
 ------------------
 
