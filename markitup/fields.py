@@ -73,7 +73,7 @@ class MarkupField(models.TextField):
         # rules below.
         self.add_rendered_field = not kwargs.pop('no_rendered_field', False)
         super(MarkupField, self).__init__(*args, **kwargs)
-    
+
     def contribute_to_class(self, cls, name):
         if self.add_rendered_field:
             rendered_field = models.TextField(editable=False)
@@ -92,7 +92,9 @@ class MarkupField(models.TextField):
         value = self._get_val_from_obj(obj)
         return value.raw
 
-    def get_db_prep_value(self, value):
+    # this method should be renamed to get_prep_value but
+    # for django 1.1 compatibility only signature is updated
+    def get_db_prep_value(self, value, connection=None, prepared=False):
         try:
             return value.raw
         except AttributeError:
