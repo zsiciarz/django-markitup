@@ -40,7 +40,7 @@ To use ``django-markitup`` in your Django project:
 
     3. Set `the MARKITUP_FILTER setting`_.
 
-    4. If you want to use AJAX-based preview, add 
+    4. If you want to use AJAX-based preview, add
           ``url(r'^markitup/', include('markitup.urls'))`` in your root URLconf.
 
 Dependencies

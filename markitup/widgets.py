@@ -9,7 +9,7 @@ from django.utils.safestring import mark_safe
 from django.contrib.admin.widgets import AdminTextareaWidget
 
 from markitup import settings
-from markitup.util import absolute_url
+from markitup.util import absolute_url, absolute_jquery_url
 import posixpath
 
 class MarkupTextarea(forms.Textarea):
@@ -32,11 +32,11 @@ class MarkItUpWidget(MarkupTextarea):
     Takes two additional optional keyword arguments:
 
     ``markitup_set``
-        URL path (absolute or relative to MEDIA_URL) to MarkItUp
+        URL path (absolute or relative to STATIC_URL) to MarkItUp
         button set directory.  Default: value of MARKITUP_SET setting.
 
     ``markitup_skin``
-        URL path (absolute or relative to MEDIA_URL) to MarkItUp skin
+        URL path (absolute or relative to STATIC_URL) to MarkItUp skin
         directory.  Default: value of MARKITUP_SKIN setting.
 
     """
@@ -55,7 +55,7 @@ class MarkItUpWidget(MarkupTextarea):
         return forms.Media(
             css= {'screen': (posixpath.join(self.miu_skin, 'style.css'),
                              posixpath.join(self.miu_set, 'style.css'))},
-            js=(settings.JQUERY_URL,
+            js=(absolute_jquery_url(),
                 absolute_url('markitup/jquery.markitup.js'),
                 posixpath.join(self.miu_set, 'set.js')))
     media = property(_media)

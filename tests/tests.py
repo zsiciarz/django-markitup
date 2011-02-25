@@ -128,7 +128,7 @@ class PreviewTests(TestCase):
         c = Client()
         response = c.post('/markitup/preview/',
                           {'data': 'replace this with something else'})
-        self.assertContains(response, '/media/markitup/preview.css',
+        self.assertContains(response, '/static/markitup/preview.css',
                             status_code=200)
 
     def test_preview_media_url(self):
@@ -223,7 +223,7 @@ else:
     markitup_tags = 'markitup_tags'
 
 class TemplatetagMediaUrlTests(MIUTestCase):
-    prefix = '/media'
+    prefix = '/static'
 
     # helper abstractions so we can reuse same tests for widget and
     # templatetag methods
@@ -255,9 +255,10 @@ class TemplatetagMediaUrlTests(MIUTestCase):
 
     # JQUERY_URL settings and resulting link
     jquery_urls = (
-        # in relative case, should always be MEDIA_URL, not MARKITUP_MEDIA_URL
-        ('jquery.min.js', '/media/jquery.min.js'),
-        ('some/path/jquery.min.js', '/media/some/path/jquery.min.js'),
+        # in relative case, should always be STATIC_URL (or MEDIA_URL
+        # for django < 1.3 without staticfiles), not MARKITUP_MEDIA_URL
+        ('jquery.min.js', '/static/jquery.min.js'),
+        ('some/path/jquery.min.js', '/static/some/path/jquery.min.js'),
         ('/some/path/jquery.min.js', '/some/path/jquery.min.js'),
         ('http://www.example.com/jquery.min.js', 'http://www.example.com/jquery.min.js'),
         ('https://www.example.com/jquery.min.js', 'https://www.example.com/jquery.min.js'),

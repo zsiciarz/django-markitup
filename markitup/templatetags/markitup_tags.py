@@ -2,7 +2,7 @@ import warnings
 from django import template
 from django.conf import settings as django_settings
 from markitup import settings
-from markitup.util import absolute_url
+from markitup.util import absolute_url, absolute_jquery_url
 from markitup.fields import render_func
 
 register = template.Library()
@@ -17,8 +17,7 @@ def _get_markitup_context():
     return {
         'MARKITUP_SET': absolute_url(settings.MARKITUP_SET).rstrip('/'),
         'MARKITUP_SKIN': absolute_url(settings.MARKITUP_SKIN).rstrip('/'),
-        'JQUERY_URL': absolute_url(settings.JQUERY_URL,
-                                   django_settings.MEDIA_URL),
+        'JQUERY_URL': absolute_jquery_url(),
         'MARKITUP_JS': absolute_url('markitup/jquery.markitup.js')
         }
 register._markitup_context = _get_markitup_context()
