@@ -4,6 +4,14 @@ CHANGES
 tip (unreleased)
 ----------------
 
+- Django 1.3 & staticfiles compatibility: MARKITUP_MEDIA_URL and jQuery URL
+  default to STATIC_URL rather than MEDIA_URL, if set.  Static assets now
+  available under static/ as well as media/.  Thanks Mikhail Korobov.
+
+- MarkupField.get_db_prep_value updated to take "connection" and "prepared"
+  arguments to avoid deprecation warnings under Django 1.3.  Thanks Mikhail
+  Korobov.
+
 - enforce minimum length of 3 characters for MarkItUp!-inserted h1 and h2
   underline-style headers (works around bug in python-markdown).  Thanks
   Daemian Mack for the report.
