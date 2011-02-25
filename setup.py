@@ -3,7 +3,7 @@ import subprocess
 import os.path
 
 try:
-    # don't get confused if our sdist is unzipped in a subdir of some 
+    # don't get confused if our sdist is unzipped in a subdir of some
     # other hg repo
     if os.path.isdir('.hg'):
         p = subprocess.Popen(['hg', 'parents', r'--template={rev}\n'],
@@ -14,15 +14,25 @@ try:
             fh.close()
 except (OSError, IndexError):
     pass
-    
+
 try:
     hgrev = open('HGREV').read()
 except IOError:
     hgrev = ''
-    
-long_description = (open('README.rst').read() + 
+
+long_description = (open('README.rst').read() +
                     open('CHANGES.rst').read() +
                     open('TODO.rst').read())
+
+def _static_files(prefix):
+    return [prefix+'/'+pattern for pattern in [
+        'markitup/*.*',
+        'markitup/sets/*/*.*',
+        'markitup/sets/*/images/*.png',
+        'markitup/skins/*/*.*',
+        'markitup/skins/*/images/*.png',
+        'markitup/templates/*.*'
+    ]]
 
 setup(
     name='django-markitup',
@@ -44,11 +54,7 @@ setup(
     ],
     zip_safe=False,
     test_suite='tests.runtests.runtests',
-    package_data={'markitup': ['templates/markitup/*.html',
-                               'media/markitup/*.*',
-                               'media/markitup/sets/*/*.*',
-                               'media/markitup/sets/*/images/*.png',
-                               'media/markitup/skins/*/*.*',
-                               'media/markitup/skins/*/images/*.png',
-                               'media/markitup/templates/*.*']}
+    package_data={'markitup': ['templates/markitup/*.html'] +
+                              _static_files('media') +
+                              _static_files('static')}
 )
