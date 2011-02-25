@@ -4,6 +4,9 @@ CHANGES
 tip (unreleased)
 ----------------
 
+- Added blank=True to MarkupField's auto-added rendered-field to avoid South
+  warnings.
+
 - Django 1.3 & staticfiles compatibility: MARKITUP_MEDIA_URL and jQuery URL
   default to STATIC_URL rather than MEDIA_URL, if set.  Static assets now
   available under static/ as well as media/.  Thanks Mikhail Korobov.
