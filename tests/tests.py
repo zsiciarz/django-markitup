@@ -172,12 +172,12 @@ class TemplatefilterTests(MIUTestCase):
         tpl_string = "{% load markitup_tags %}{{ content|render_markup }}"
         self.assertEquals('replacement text', self.render(tpl_string,
                                                           {'content': 'replace this text'}))
-        
-            
+
+
 class RenderTests(MIUTestCase):
     look_for = '$("#my_id").markItUp(mySettings);'
     auto_preview_override = True
-    
+
     def test_widget_render(self):
         widget = MarkItUpWidget()
         self.assertIn(self.look_for,
@@ -208,7 +208,7 @@ class RenderTests(MIUTestCase):
 class AutoPreviewSettingTests(RenderTests):
     look_for = "$('a[title=\"Preview\"]').trigger('mouseup');"
     auto_preview_override = False
-    
+
     def setUp(self):
         self._old_auto = settings.MARKITUP_AUTO_PREVIEW
         settings.MARKITUP_AUTO_PREVIEW = True
@@ -230,29 +230,29 @@ class TemplatetagMediaUrlTests(MIUTestCase):
     def _reset_context(self):
         # monkeypatch a forced recalculation of the template context
         # format of get_library arg changed in 1.2
-        
+
         tags = get_library(markitup_tags)
         tags._markitup_context = _get_markitup_context()
 
     multiple_newlines_re = re.compile('\n+')
-        
+
     def _compress_newlines(self, s):
         # template includes cause extra newlines in some cases
         # where form.media always outputs only single newlines
         return self.multiple_newlines_re.sub('\n', s)
-        
+
     def _get_media(self):
         self._reset_context()
         return self._compress_newlines(self.render("{% load markitup_tags %}{% markitup_media %}"))
-    
+
     def _get_css(self):
         self._reset_context()
         return self.render("{% load markitup_tags %}{% markitup_css %}")
-    
+
     def _get_js(self):
         self._reset_context()
         return self.render("{% load markitup_tags %}{% markitup_js %}")
-    
+
     # JQUERY_URL settings and resulting link
     jquery_urls = (
         # in relative case, should always be MEDIA_URL, not MARKITUP_MEDIA_URL
@@ -293,7 +293,7 @@ class TemplatetagMediaUrlTests(MIUTestCase):
                 self.assertIn(link, self._get_js())
         finally:
             settings.JQUERY_URL = _old_jquery_url
-        
+
     def test_set_via_settings(self):
         _old_miu_set = settings.MARKITUP_SET
         try:
@@ -305,7 +305,7 @@ class TemplatetagMediaUrlTests(MIUTestCase):
                 self.assertIn(js_link, self._get_js())
         finally:
             settings.MARKITUP_SET = _old_miu_set
-        
+
     def test_skin_via_settings(self):
         _old_miu_skin = settings.MARKITUP_SKIN
         try:
@@ -324,10 +324,10 @@ class WidgetMediaUrlTests(TemplatetagMediaUrlTests):
 
     def _get_media(self, *args, **kwargs):
         return str(self._get_media_obj(*args, **kwargs))
-    
+
     def _get_css(self, *args, **kwargs):
         return str(self._get_media_obj(*args, **kwargs)['css'])
-    
+
     def _get_js(self, *args, **kwargs):
         return str(self._get_media_obj(*args, **kwargs)['js'])
 
@@ -337,13 +337,13 @@ class WidgetMediaUrlTests(TemplatetagMediaUrlTests):
             js_link = link % {'prefix': self.prefix, 'file': 'set.js'}
             self.assertIn(css_link, self._get_css(markitup_set=miu_set))
             self.assertIn(js_link, self._get_js(markitup_set=miu_set))
-        
+
     def test_skin_via_argument(self):
         for miu_skin, link in self.skin_urls:
             link = link % {'prefix': self.prefix, 'file': 'style.css'}
             self.assertIn(link, self._get_css(markitup_skin=miu_skin))
 
-            
+
 class AlternateMediaUrlTests(object):
     """
     Test that MARKITUP_MEDIA_URL properly sets the prefix used for all
@@ -355,7 +355,7 @@ class AlternateMediaUrlTests(object):
     def setUp(self):
         self._old_miu_media_url = settings.MARKITUP_MEDIA_URL
         settings.MARKITUP_MEDIA_URL = django_settings.STATIC_URL
-        
+
     def tearDown(self):
         settings.MARKITUP_MEDIA_URL = self._old_miu_media_url
 
@@ -375,7 +375,7 @@ if 'south' in django_settings.INSTALLED_APPS:
             mf = Post._meta.get_field('body')
             args, kwargs = introspector(mf)
             self.assertEquals(kwargs['no_rendered_field'], 'True')
-        
+
         def test_no_rendered_field_works(self):
             from models import NoRendered
             self.assertRaises(FieldDoesNotExist,

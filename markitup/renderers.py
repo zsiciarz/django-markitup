@@ -5,4 +5,3 @@ try:
         return parts["html_body"]
 except ImportError:
     pass
-

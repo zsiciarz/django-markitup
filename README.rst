@@ -60,7 +60,7 @@ can be used like any other Django custom widget.
 To assign it to a form field::
 
     from markitup.widgets import MarkItUpWidget
-    
+
     class MyForm(forms.Form):
         content = forms.CharField(widget=MarkItUpWidget())
 
@@ -90,7 +90,7 @@ possible to use the MarkItUpWidget on one TextField in a model and not
 another)::
 
     from markitup.widgets import AdminMarkItUpWidget
-    
+
     class MyModelAdmin(admin.ModelAdmin):
         formfield_overrides = {models.TextField: {'widget': AdminMarkItUpWidget}}
 
@@ -156,7 +156,7 @@ MarkupField
 
 You can apply the MarkItUp! editor control to any textarea using the
 above techniques, and handle the markup on the server side however you
-prefer. 
+prefer.
 
 For a seamless markup-handling solution, django-markitup also provides
 a ``MarkupField`` model field that automatically renders and stores
@@ -324,7 +324,7 @@ your templates using your MARKITUP_FILTER function. For this you can
 use the ``render_markup`` template filter::
 
     {% load markitup_tags %}
-    
+
     {{ post.content|render_markup }}
 
 Other settings
