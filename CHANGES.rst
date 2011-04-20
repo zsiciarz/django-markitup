@@ -4,6 +4,9 @@ CHANGES
 tip (unreleased)
 ----------------
 
+- Added compatibility with new AJAX CSRF requirements in Django 1.2.5 and
+  1.3. Fixes #7. Thanks zw0rk for the report.
+
 - Added blank=True to MarkupField's auto-added rendered-field to avoid South
   warnings.
 

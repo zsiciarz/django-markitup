@@ -331,6 +331,7 @@ class TemplatetagMediaUrlTests(MIUTestCase):
         out = """<link href="%(prefix)s/markitup/skins/simple/style.css" type="text/css" media="screen" rel="stylesheet" />
 <link href="%(prefix)s/markitup/sets/default/style.css" type="text/css" media="screen" rel="stylesheet" />
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+<script type="text/javascript" src="%(prefix)s/markitup/ajax_csrf.js"></script>
 <script type="text/javascript" src="%(prefix)s/markitup/jquery.markitup.js"></script>
 <script type="text/javascript" src="%(prefix)s/markitup/sets/default/set.js"></script>""" % {'prefix': self.prefix}
         self.assertEquals(self._get_media(), out)

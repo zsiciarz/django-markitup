@@ -1,7 +1,7 @@
 """
 widgets for django-markitup
 
-Time-stamp: <2010-01-06 12:31:06 carljm widgets.py>
+Time-stamp: <2011-04-19 19:03:14 carljm widgets.py>
 
 """
 from django import forms
@@ -56,6 +56,7 @@ class MarkItUpWidget(MarkupTextarea):
             css= {'screen': (posixpath.join(self.miu_skin, 'style.css'),
                              posixpath.join(self.miu_set, 'style.css'))},
             js=(absolute_jquery_url(),
+                absolute_url('markitup/ajax_csrf.js'),
                 absolute_url('markitup/jquery.markitup.js'),
                 posixpath.join(self.miu_set, 'set.js')))
     media = property(_media)
