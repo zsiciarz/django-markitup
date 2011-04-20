@@ -1,10 +1,7 @@
 from os.path import dirname, join
 MIU_TEST_ROOT = dirname(__file__)
 
-SITE_ID = 1 # @@@ workaround bug in trunk create_test_db
-
 INSTALLED_APPS = [
-    "django.contrib.sites", # @@@ workaround bug in trunk create_test_db
     "markitup",
     "tests"]
 
