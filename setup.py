@@ -54,6 +54,7 @@ setup(
     ],
     zip_safe=False,
     test_suite='runtests.runtests',
+    tests_require='Django>=1.1',
     package_data={'markitup': ['templates/markitup/*.html'] +
                               _static_files('media') +
                               _static_files('static')}

@@ -5,3 +5,5 @@ build/*
 HGREV
 .project
 .pydevproject
+.tox/
+Django-*.egg
