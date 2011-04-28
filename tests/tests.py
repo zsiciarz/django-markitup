@@ -1,18 +1,18 @@
 import re
 
+from django import VERSION
+from django.conf import settings as django_settings
+from django.core import serializers
+from django.db.models.fields import FieldDoesNotExist
+from django.forms.models import modelform_factory
 from django.template import Template, Context, get_library
 from django.test import TestCase, Client
-from django.conf import settings as django_settings
-from markitup.templatetags.markitup_tags import _get_markitup_context
-from django.core import serializers
-from django.forms.models import modelform_factory
-from django.db.models.fields import FieldDoesNotExist
 from django.utils.safestring import mark_safe
-from django import VERSION
 
 from django.contrib import admin
 
 from markitup import settings
+from markitup.templatetags.markitup_tags import _get_markitup_context
 from markitup.widgets import MarkItUpWidget, MarkupTextarea, AdminMarkItUpWidget
 
 from models import Post
