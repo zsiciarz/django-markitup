@@ -12,6 +12,17 @@ class Post(models.Model):
     def __unicode__(self):
         return self.title
 
+
+
+class AbstractParent(models.Model):
+    content = MarkupField()
+
+
+    class Meta:
+        abstract = True
+
+
+
 class NoRendered(models.Model):
     """
     Test that the no_rendered_field keyword arg works. This arg should

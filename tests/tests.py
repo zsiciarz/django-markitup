@@ -15,7 +15,7 @@ from markitup import settings
 from markitup.templatetags.markitup_tags import _get_markitup_context
 from markitup.widgets import MarkItUpWidget, MarkupTextarea, AdminMarkItUpWidget
 
-from models import Post
+from models import Post, AbstractParent
 
 
 
@@ -79,6 +79,20 @@ class MarkupFieldTests(TestCase):
         """
         self.post.body = mark_safe(self.post.body)
         self.assertEquals(self.post.body.raw, 'replace this text')
+
+
+    def testAbstractInheritance(self):
+        """
+        Inheriting from an abstract parent class with a MarkupField should not
+        cause duplicate _rendered fields to be added.
+
+        """
+        class Child(AbstractParent):
+            pass
+
+        self.assertEqual(
+            [f.name for f in Child._meta.fields],
+            ["id", "content", "_content_rendered"])
 
 
 # TODO

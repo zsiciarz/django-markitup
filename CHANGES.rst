@@ -4,6 +4,10 @@ CHANGES
 tip (unreleased)
 ----------------
 
+- Added check to avoid double _rendered fields when MarkupField is used on an
+  abstract base model class. Fixes #11. Thanks Denis Kolodin for report and
+  patch.
+
 - Added compatibility with new AJAX CSRF requirements in Django 1.2.5 and
   1.3. Fixes #7. Thanks zw0rk for the report.
 

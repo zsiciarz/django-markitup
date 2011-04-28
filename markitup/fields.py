@@ -75,7 +75,7 @@ class MarkupField(models.TextField):
         super(MarkupField, self).__init__(*args, **kwargs)
 
     def contribute_to_class(self, cls, name):
-        if self.add_rendered_field:
+        if self.add_rendered_field and not cls._meta.abstract:
             rendered_field = models.TextField(editable=False, blank=True)
             rendered_field.creation_counter = self.creation_counter+1
             cls.add_to_class(_rendered_field_name(name), rendered_field)
