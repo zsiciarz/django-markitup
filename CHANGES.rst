@@ -4,6 +4,8 @@ CHANGES
 tip (unreleased)
 ----------------
 
+- Updated to jquery 1.6.
+
 - Added check to avoid double _rendered fields when MarkupField is used on an
   abstract base model class. Fixes #11. Thanks Denis Kolodin for report and
   patch.
