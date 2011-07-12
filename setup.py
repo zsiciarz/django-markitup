@@ -36,15 +36,15 @@ def _static_files(prefix):
 
 setup(
     name='django-markitup',
-    version='0.6.1.post%s' % hgrev,
+    version='1.0.0',
     description='Markup handling for Django using the MarkItUp! universal markup editor',
     long_description=long_description,
     author='Carl Meyer',
-    author_email='carl@dirtcircle.com',
+    author_email='carl@oddbird.net',
     url='http://bitbucket.org/carljm/django-markitup/',
     packages=['markitup', 'markitup.templatetags'],
     classifiers=[
-        'Development Status :: 4 - Beta',
+        'Development Status :: 5 - Production/Stable',
         'Environment :: Web Environment',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: BSD License',
@@ -54,8 +54,7 @@ setup(
     ],
     zip_safe=False,
     test_suite='runtests.runtests',
-    tests_require='Django>=1.1',
+    tests_require='Django>=1.3',
     package_data={'markitup': ['templates/markitup/*.html'] +
-                              _static_files('media') +
                               _static_files('static')}
 )

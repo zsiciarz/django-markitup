@@ -6,5 +6,4 @@ include README.rst
 include TODO.rst
 include HGREV
 recursive-include markitup/templates *.html
-recursive-include markitup/media *.html *.css *.js *.txt *.png
 recursive-include markitup/static *.html *.css *.js *.txt *.png

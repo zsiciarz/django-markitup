@@ -7,6 +7,5 @@ from markitup.markup import filter_func
 def apply_filter(request):
     markup = filter_func(request.POST.get('data', ''))
     return render_to_response( 'markitup/preview.html',
-                              {'preview': markup,
-                               'MARKITUP_MEDIA_URL': settings.MARKITUP_MEDIA_URL},
+                              {'preview': markup},
                               context_instance=RequestContext(request))

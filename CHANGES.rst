@@ -4,6 +4,13 @@ CHANGES
 tip (unreleased)
 ----------------
 
+1.0.0 (2011.07.11)
+------------------
+
+- Removed all compatibility shims for Django versions prior to 1.3, including
+  all support for static media at ``MEDIA_URL``, static assets under
+  ``media/``, and the ``MARKITUP_MEDIA_URL`` setting.
+
 - Updated to jquery 1.6.
 
 - Added check to avoid double _rendered fields when MarkupField is used on an

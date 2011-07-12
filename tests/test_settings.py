@@ -5,22 +5,13 @@ INSTALLED_APPS = [
     "markitup",
     "tests"]
 
-from django import VERSION
-
-if VERSION < (1, 2):
-    DATABASE_ENGINE = "sqlite3"
-else:
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3"
-            }
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3"
         }
-
-MEDIA_URL = "/media/"
-MEDIA_ROOT = join(dirname(MIU_TEST_ROOT), "markitup", "media")
+    }
 
 STATIC_URL = "/static/"
-STATIC_ROOT = MEDIA_ROOT
 
 ROOT_URLCONF = "tests.urls"
 

@@ -1,6 +1,6 @@
 from django import template
 from markitup import settings
-from markitup.util import absolute_url, absolute_jquery_url
+from markitup.util import absolute_url
 from markitup.fields import render_func
 
 register = template.Library()
@@ -18,7 +18,7 @@ def _get_markitup_context():
     return {
         'MARKITUP_SET': absolute_url(settings.MARKITUP_SET).rstrip('/'),
         'MARKITUP_SKIN': absolute_url(settings.MARKITUP_SKIN).rstrip('/'),
-        'JQUERY_URL': absolute_jquery_url(),
+        'JQUERY_URL': absolute_url(settings.JQUERY_URL),
         'MARKITUP_JS': absolute_url('markitup/jquery.markitup.js'),
         'AJAXCSRF_JS': absolute_url('markitup/ajax_csrf.js'),
         }

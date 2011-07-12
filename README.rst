@@ -15,6 +15,7 @@ A Django reusable application for end-to-end markup handling. Includes:
 
 .. _MarkItUp!: http://markitup.jaysalvat.com/
 
+
 Installation
 ============
 
@@ -32,22 +33,28 @@ To use ``django-markitup`` in your Django project:
 
     1. Add ``'markitup'`` to your ``INSTALLED_APPS`` setting.
 
-    2. Make the contents of the ``markitup/media/markitup`` directory
-       available at ``MEDIA_URL/markitup`` (or
-       ``MARKITUP_MEDIA_URL/markitup``, see `MARKITUP_MEDIA_URL`_).
-       This can be done by copying the files, making a symlink, or
-       through your webserver configuration.
+    2. Make the contents of the ``markitup/static/markitup`` directory
+       available at ``STATIC_URL/markitup``; the simplest way is via
+       `django.contrib.staticfiles`_.
 
     3. Set `the MARKITUP_FILTER setting`_.
 
     4. If you want to use AJAX-based preview, add
           ``url(r'^markitup/', include('markitup.urls'))`` in your root URLconf.
 
+.. _django.contrib.staticfiles: https://docs.djangoproject.com/en/dev/howto/static-files/
+
+
 Dependencies
 ------------
 
-``django-markitup`` requires `Django`_ 1.1 or later. `MarkItUp!`_ is
-not an external dependency; it is bundled with ``django-markitup``.
+``django-markitup`` 1.0 requires `Django`_ 1.3 or later and Python 2.5 or
+later. The 0.6.x series supports `Django`_ 1.1 and 1.2; it is missing
+1.3-compatibility additions but otherwise has feature-parity with 1.0, so
+remains a fine choice for older Django versions.
+
+`MarkItUp!`_ is not an external dependency; it is bundled with
+``django-markitup``.
 
 .. _Django: http://www.djangoproject.com/
 
@@ -242,10 +249,9 @@ basic "markdown" and "textile" sets (these are the sets available from
 `the MarkItUp site <http://markitup.jaysalvat.com>`_, modified only to
 add previewParserPath).
 
-To use an alternate set, assign the ``MARKITUP_SET`` setting a URL
-path (absolute or relative to ``MEDIA_URL``/``MARKITUP_MEDIA_URL``) to
-the set directory.  For instance, to use the "markdown" set included
-with django-markitup::
+To use an alternate set, assign the ``MARKITUP_SET`` setting a URL path
+(absolute or relative to ``STATIC_URL``) to the set directory.  For
+instance, to use the "markdown" set included with django-markitup::
 
     MARKITUP_SET = 'markitup/sets/markdown'
 
@@ -330,15 +336,6 @@ use the ``render_markup`` template filter::
 Other settings
 ==============
 
-MARKITUP_MEDIA_URL
-------------------
-
-Some projects separate user-uploaded media at ``MEDIA_URL`` from
-static assets. If you keep static assets at a URL other than
-``MEDIA_URL``, just set ``MARKITUP_MEDIA_URL`` to that URL, and make
-sure the contents of the ``markitup/media/markitup`` directory are
-available at ``MARKITUP_MEDIA_URL/markitup/``.
-
 MARKITUP_PREVIEW_FILTER
 -----------------------
 
@@ -360,13 +357,12 @@ JQUERY_URL
 MarkItUp! requires the jQuery Javascript library.  By default,
 django-markitup links to the most recent minor version of jQuery 1.6
 available at ajax.googleapis.com (via the URL
-``http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js``).
+``http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js``).
 If you wish to use a different version of jQuery, or host it yourself,
 set the JQUERY_URL setting.  For example::
 
     JQUERY_URL = 'jquery.min.js'
 
-This will use the jQuery available at MEDIA_URL/jquery.min.js. Note
-that a relative ``JQUERY_URL`` is always relative to ``MEDIA_URL``, it
-does not use ``MARKITUP_MEDIA_URL``.
+This will use the jQuery available at STATIC_URL/jquery.min.js. A relative
+``JQUERY_URL`` is relative to ``STATIC_URL``.
 

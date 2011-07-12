@@ -1,13 +1,14 @@
+from __future__ import with_statement
+
 import re
 
-from django import VERSION
-from django.conf import settings as django_settings
 from django.core import serializers
 from django.db.models.fields import FieldDoesNotExist
 from django.forms.models import modelform_factory
 from django.template import Template, Context, get_library
 from django.test import TestCase, Client
 from django.utils.safestring import mark_safe
+from django.utils.unittest import skipUnless
 
 from django.contrib import admin
 
@@ -168,19 +169,6 @@ class PreviewTests(TestCase):
                             status_code=200)
 
 
-    def test_preview_media_url(self):
-        _old_miu_media_url = settings.MARKITUP_MEDIA_URL
-        try:
-            settings.MARKITUP_MEDIA_URL = '/some/path/'
-            c = Client()
-            response = c.post('/markitup/preview/',
-                              {'data': 'replace this with something else'})
-            self.assertContains(response, '/some/path/markitup/preview.css',
-                                status_code=200)
-        finally:
-            settings.MARKITUP_MEDIA_URL = _old_miu_media_url
-
-
     def test_preview_template(self):
         c = Client()
         response = c.post('/markitup/preview/',
@@ -267,13 +255,6 @@ class AutoPreviewSettingTests(RenderTests):
 
 
 
-# format of arg to get_library changed in 1.2
-if VERSION < (1,2):
-    markitup_tags = 'django.templatetags.markitup_tags'
-else:
-    markitup_tags = 'markitup_tags'
-
-
 class TemplatetagMediaUrlTests(MIUTestCase):
     prefix = '/static'
 
@@ -282,9 +263,7 @@ class TemplatetagMediaUrlTests(MIUTestCase):
     # templatetag methods
     def _reset_context(self):
         # monkeypatch a forced recalculation of the template context
-        # format of get_library arg changed in 1.2
-
-        tags = get_library(markitup_tags)
+        tags = get_library("markitup_tags")
         tags._markitup_context = _get_markitup_context()
 
 
@@ -315,8 +294,6 @@ class TemplatetagMediaUrlTests(MIUTestCase):
 
     # JQUERY_URL settings and resulting link
     jquery_urls = (
-        # in relative case, should always be STATIC_URL (or MEDIA_URL
-        # for django < 1.3 without staticfiles), not MARKITUP_MEDIA_URL
         ('jquery.min.js', '/static/jquery.min.js'),
         ('some/path/jquery.min.js', '/static/some/path/jquery.min.js'),
         ('/some/path/jquery.min.js', '/some/path/jquery.min.js'),
@@ -418,52 +395,22 @@ class WidgetMediaUrlTests(TemplatetagMediaUrlTests):
 
 
 
-class AlternateMediaUrlTests(object):
-    """
-    Test that MARKITUP_MEDIA_URL properly sets the prefix used for all
-    MarkItUp media with relative provided URLs.
-
-    """
-    prefix = '/static'
-
-
-    def setUp(self):
-        self._old_miu_media_url = settings.MARKITUP_MEDIA_URL
-        settings.MARKITUP_MEDIA_URL = django_settings.STATIC_URL
-
-
-    def tearDown(self):
-        settings.MARKITUP_MEDIA_URL = self._old_miu_media_url
-
-
-
-class TemplatetagAlternateMediaUrlTests(AlternateMediaUrlTests,
-                                        TemplatetagMediaUrlTests):
-    pass
-
-
-
-class WidgetAlternateMediaUrlTests(AlternateMediaUrlTests,
-                                   WidgetMediaUrlTests):
-    pass
-
-
-
-# @@@ Use proper test skipping once Django 1.2 is minimum supported version.
 try:
     from south.modelsinspector import introspector
 except ImportError:
     introspector = None
 
-if introspector is not None:
-    class SouthFreezingTests(TestCase):
-        def test_introspector_adds_no_rendered_field(self):
-            mf = Post._meta.get_field('body')
-            args, kwargs = introspector(mf)
-            self.assertEquals(kwargs['no_rendered_field'], 'True')
 
-        def test_no_rendered_field_works(self):
-            from models import NoRendered
-            self.assertRaises(FieldDoesNotExist,
-                              NoRendered._meta.get_field,
-                              '_body_rendered')
+class SouthFreezingTests(TestCase):
+    @skipUnless(introspector, "South not available")
+    def test_introspector_adds_no_rendered_field(self):
+        mf = Post._meta.get_field('body')
+        args, kwargs = introspector(mf)
+        self.assertEquals(kwargs['no_rendered_field'], 'True')
+
+    @skipUnless(introspector, "South not available")
+    def test_no_rendered_field_works(self):
+        from models import NoRendered
+        self.assertRaises(FieldDoesNotExist,
+                          NoRendered._meta.get_field,
+                          '_body_rendered')
