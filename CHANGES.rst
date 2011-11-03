@@ -4,8 +4,11 @@ CHANGES
 tip (unreleased)
 ----------------
 
+- Prevented double application of MarkItUp! editor to an
+  element. Fixes #4. Thanks Rich Leland.
+
 - Added `__len__` to `Markup` object to facilitate length and truthiness checks
-  in templates. Thanks Edmund von der Burg.
+  in templates. Fixes #16. Thanks Edmund von der Burg.
 
 1.0.0 (2011.07.11)
 ------------------

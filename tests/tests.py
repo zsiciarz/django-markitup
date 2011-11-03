@@ -216,7 +216,7 @@ class TemplatefilterTests(MIUTestCase):
 
 
 class RenderTests(MIUTestCase):
-    look_for = '$("#my_id").markItUp(mySettings);'
+    look_for = 'var element = $("#my_id");'
     auto_preview_override = True
 
 

@@ -1,7 +1,10 @@
 <script type="text/javascript">
 (function($) {
 $(document).ready(function() {
-  $("#{{ textarea_id }}").markItUp(mySettings);
+  var element = $("#{{ textarea_id }}");
+  if(!element.hasClass("markItUpEditor")) {
+    element.markItUp(mySettings);
+  }
   {% if AUTO_PREVIEW %}$('a[title="Preview"]').trigger('mouseup');{% endif %}
 });
 })(jQuery);
