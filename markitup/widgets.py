@@ -68,15 +68,20 @@ class MarkItUpWidget(MarkupTextarea):
             auto_preview = "$('a[title=\"Preview\"]').trigger('mouseup');"
         else: auto_preview = ''
 
-        html += ('<script type="text/javascript">'
-                '(function($) { '
-                 '$(document).ready(function() {'
-                 '  $("#%(id)s").markItUp(mySettings);'
-                 '  %(auto_preview)s '
-                 '});'
-                 '})(jQuery);'
-                 '</script>' % {'id': attrs['id'],
-                                'auto_preview': auto_preview })
+        html += """
+        <script type="text/javascript">
+        (function($) {
+          $(document).ready(function() {
+            var element = $("#%(id)s");
+            if(!element.hasClass("markItUpEditor")) {
+              element.markItUp(mySettings);
+            }
+            %(auto_preview)s
+          });
+          })(jQuery);
+        </script>'
+        """ % {'id': attrs['id'], 'auto_preview': auto_preview }
+
         return mark_safe(html)
 
 
