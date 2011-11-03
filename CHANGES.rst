@@ -4,6 +4,9 @@ CHANGES
 tip (unreleased)
 ----------------
 
+- Added `__len__` to `Markup` object to facilitate length and truthiness checks
+  in templates. Thanks Edmund von der Burg.
+
 1.0.0 (2011.07.11)
 ------------------
 
