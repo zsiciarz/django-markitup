@@ -12,7 +12,7 @@ from markitup import settings
 from markitup.util import absolute_url
 import posixpath
 
-class MarkupTextarea(forms.Textarea):
+class MarkupInput(forms.Widget):
     def render(self, name, value, attrs=None):
         if value is not None:
             # Special handling for MarkupField value.
@@ -22,7 +22,13 @@ class MarkupTextarea(forms.Textarea):
                 value = value.raw
             except AttributeError:
                 pass
-        return super(MarkupTextarea, self).render(name, value, attrs)
+        return super(MarkupInput, self).render(name, value, attrs)
+
+class MarkupTextarea(MarkupInput, forms.Textarea):
+    pass
+
+class MarkupHiddenWidget(MarkupInput, forms.HiddenInput):
+    pass
 
 
 class MarkItUpWidget(MarkupTextarea):

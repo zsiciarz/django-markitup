@@ -107,7 +107,9 @@ class MarkupField(models.TextField):
     def formfield(self, **kwargs):
         defaults = {'widget': widgets.MarkupTextarea}
         defaults.update(kwargs)
-        return super(MarkupField, self).formfield(**defaults)
+        field = super(MarkupField, self).formfield(**defaults)
+        field.hidden_widget = widgets.MarkupHiddenWidget
+        return field
 
 # register MarkupField to use the custom widget in the Admin
 from django.contrib.admin.options import FORMFIELD_FOR_DBFIELD_DEFAULTS
