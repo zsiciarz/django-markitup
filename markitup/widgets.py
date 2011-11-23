@@ -85,7 +85,7 @@ class MarkItUpWidget(MarkupTextarea):
             %(auto_preview)s
           });
           })(jQuery);
-        </script>'
+        </script>
         """ % {'id': attrs['id'], 'auto_preview': auto_preview }
 
         return mark_safe(html)
