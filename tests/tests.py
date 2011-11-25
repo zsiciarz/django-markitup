@@ -16,7 +16,7 @@ from markitup import settings
 from markitup.templatetags.markitup_tags import _get_markitup_context
 from markitup.widgets import MarkItUpWidget, MarkupTextarea, AdminMarkItUpWidget
 
-from models import Post, AbstractParent
+from models import Post, AbstractParent, CallableDefault
 
 
 
@@ -160,6 +160,24 @@ class MarkupFieldFormTests(TestCase):
         self.assertEquals(ma.formfield_for_dbfield(
                 Post._meta.get_field('body')).widget.__class__,
                           AdminMarkItUpWidget)
+
+
+
+class HiddenFieldFormTests(TestCase):
+    def setUp(self):
+        self.post = CallableDefault(body='[link](http://example.com) & "text"')
+        self.form_class = modelform_factory(CallableDefault)
+
+
+    def testHiddenFieldContents(self):
+        form = self.form_class(instance=self.post)
+        self.assertEquals(unicode(form['body']), (
+            u'<textarea id="id_body" rows="10" cols="40" name="body">'
+            u'[link](http://example.com) &amp; &quot;text&quot;'
+            u'</textarea><input type="hidden" name="initial-body" value="'
+            u'[link](http://example.com) &amp; &quot;text&quot;" '
+            u'id="initial-id_body" />'
+        ))
 
 
 

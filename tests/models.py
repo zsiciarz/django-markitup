@@ -30,3 +30,11 @@ class NoRendered(models.Model):
 
     """
     body = MarkupField(no_rendered_field=True)
+
+
+
+class CallableDefault(models.Model):
+    """
+    A callable default on a field triggers hidden widget rendering by Django.
+    """
+    body = MarkupField(default=lambda:'')
