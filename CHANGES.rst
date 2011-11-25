@@ -4,6 +4,8 @@ CHANGES
 tip (unreleased)
 ----------------
 
+- Fixed hidden-widget rendering of a ``MarkupField``. Thanks Aramgutang.
+
 - Prevented double application of MarkItUp! editor to an
   element. Fixes #4. Thanks Rich Leland.
 

@@ -4,3 +4,4 @@ James Turk <james.p.turk@gmail.com>
 Jeremy Carbaugh
 Mike Korobov <kmike84@gmail.com>
 Mikhael Korneev
+Aram Dulyan
