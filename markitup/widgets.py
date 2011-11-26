@@ -1,7 +1,7 @@
 """
 widgets for django-markitup
 
-Time-stamp: <2011-04-19 19:03:14 carljm widgets.py>
+Time-stamp: <2011-11-26 14:39:52 carljm widgets.py>
 
 """
 from django import forms
@@ -76,10 +76,11 @@ class MarkItUpWidget(MarkupTextarea):
         else: auto_preview = ''
 
         try:
-            preview_url = 'mySettings["previewParserPath"] = "%s";' % \
-                                reverse('markitup_preview')
+            preview_url = (
+                'mySettings["previewParserPath"] = "%s";'
+                % reverse('markitup_preview'))
         except NoReverseMatch:
-           preview_url = '';
+           preview_url = "";
 
         html += """
         <script type="text/javascript">
