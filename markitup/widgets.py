@@ -7,6 +7,7 @@ Time-stamp: <2011-04-19 19:03:14 carljm widgets.py>
 from django import forms
 from django.utils.safestring import mark_safe
 from django.contrib.admin.widgets import AdminTextareaWidget
+from django.core.urlresolvers import reverse
 
 from markitup import settings
 from markitup.util import absolute_url
@@ -80,13 +81,15 @@ class MarkItUpWidget(MarkupTextarea):
           $(document).ready(function() {
             var element = $("#%(id)s");
             if(!element.hasClass("markItUpEditor")) {
+              mySettings["previewParserPath"] = "%(preview_url)s";
               element.markItUp(mySettings);
             }
             %(auto_preview)s
           });
           })(jQuery);
         </script>
-        """ % {'id': attrs['id'], 'auto_preview': auto_preview }
+        """ % {'id': attrs['id'], 'auto_preview': auto_preview,
+               'preview_url': reverse('markitup_preview')}
 
         return mark_safe(html)
 

@@ -3,6 +3,7 @@
 $(document).ready(function() {
   var element = $("#{{ textarea_id }}");
   if(!element.hasClass("markItUpEditor")) {
+    mySettings["previewParserPath"] = "{{ preview_url }}";
     element.markItUp(mySettings);
   }
   {% if AUTO_PREVIEW %}$('a[title="Preview"]').trigger('mouseup');{% endif %}

@@ -1,4 +1,5 @@
 from django import template
+from django.core.urlresolvers import reverse
 from markitup import settings
 from markitup.util import absolute_url
 from markitup.fields import render_func
@@ -53,4 +54,5 @@ def markitup_editor(textarea_id, auto_preview=None):
     else:
         auto_preview = settings.MARKITUP_AUTO_PREVIEW
     return {'textarea_id': textarea_id,
-            'AUTO_PREVIEW': auto_preview}
+            'AUTO_PREVIEW': auto_preview,
+            'preview_url': reverse('markitup_preview')}
