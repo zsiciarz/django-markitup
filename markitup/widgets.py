@@ -75,6 +75,11 @@ class MarkItUpWidget(MarkupTextarea):
             auto_preview = "$('a[title=\"Preview\"]').trigger('mouseup');"
         else: auto_preview = ''
 
+        try:
+           preview_url = reverse('markitup_preview')
+        except NoReverseMatch:
+           preview_url = '';
+
         html += """
         <script type="text/javascript">
         (function($) {
@@ -89,7 +94,7 @@ class MarkItUpWidget(MarkupTextarea):
           })(jQuery);
         </script>
         """ % {'id': attrs['id'], 'auto_preview': auto_preview,
-               'preview_url': reverse('markitup_preview')}
+               'preview_url': preview_url}
 
         return mark_safe(html)
 
