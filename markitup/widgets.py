@@ -76,7 +76,8 @@ class MarkItUpWidget(MarkupTextarea):
         else: auto_preview = ''
 
         try:
-           preview_url = reverse('markitup_preview')
+            preview_url = 'mySettings["previewParserPath"] = "%s";' % \
+                                reverse('markitup_preview')
         except NoReverseMatch:
            preview_url = '';
 
@@ -86,7 +87,7 @@ class MarkItUpWidget(MarkupTextarea):
           $(document).ready(function() {
             var element = $("#%(id)s");
             if(!element.hasClass("markItUpEditor")) {
-              mySettings["previewParserPath"] = "%(preview_url)s";
+              %(preview_url)s
               element.markItUp(mySettings);
             }
             %(auto_preview)s

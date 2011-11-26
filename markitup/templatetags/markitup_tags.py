@@ -57,7 +57,7 @@ def markitup_editor(textarea_id, auto_preview=None):
     try:
        preview_url = reverse('markitup_preview')
     except NoReverseMatch:
-       preview_url = '';
+       preview_url = None;
 
     return {'textarea_id': textarea_id,
             'AUTO_PREVIEW': auto_preview,
