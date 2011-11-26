@@ -4,6 +4,9 @@ CHANGES
 tip (unreleased)
 ----------------
 
+- Set previewParserPath dynamically rather than requiring it to be set in
+  ``set.js``.  Thanks Sebastian Brandt.
+
 - Fixed hidden-widget rendering of a ``MarkupField``. Thanks Aramgutang.
 
 - Prevented double application of MarkItUp! editor to an

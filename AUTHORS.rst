@@ -5,3 +5,4 @@ Jeremy Carbaugh
 Mike Korobov <kmike84@gmail.com>
 Mikhael Korneev
 Aram Dulyan
+Sebastian Brandt
