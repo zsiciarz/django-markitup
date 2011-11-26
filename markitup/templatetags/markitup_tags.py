@@ -1,5 +1,5 @@
 from django import template
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse, NoReverseMatch
 from markitup import settings
 from markitup.util import absolute_url
 from markitup.fields import render_func
