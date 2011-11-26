@@ -16,7 +16,6 @@
 // -------------------------------------------------------------------
 mySettings = {
 	nameSpace: 'ReST',
-	previewParserPath:	'/markitup/preview/',
 	onShiftEnter: {keepDefault:false, openWith:'\n\n'},
 	onTab: {keepDefault:false, replaceWith:'    '},
 	markupSet: [
