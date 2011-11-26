@@ -286,6 +286,11 @@ output.
 **Note:** If you use your own custom MarkItUp! set, be sure to set the
   ``previewParserPath`` option to ``'/markitup/preview/'``.
 
+**Note:** Using the MarkItUpWidget or ``markitup_editor`` template tag will
+automatically set the ``previewParserPath`` to ``reverse('markitup_preview')``,
+if it is included in your URLconf. Otherwise, the default from set.js will be
+used.  
+
 The MARKITUP_FILTER setting
 ===========================
 
