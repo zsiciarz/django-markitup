@@ -71,6 +71,8 @@ class MarkItUpWidget(MarkupTextarea):
     def render(self, name, value, attrs=None):
         html = super(MarkItUpWidget, self).render(name, value, attrs)
 
+        final_attrs = self.build_attrs(attrs)
+
         if self.auto_preview:
             auto_preview = "$('a[title=\"Preview\"]').trigger('mouseup');"
         else: auto_preview = ''
@@ -95,7 +97,7 @@ class MarkItUpWidget(MarkupTextarea):
           });
           })(jQuery);
         </script>
-        """ % {'id': attrs['id'], 'auto_preview': auto_preview,
+        """ % {'id': final_attrs['id'], 'auto_preview': auto_preview,
                'preview_url': preview_url}
 
         return mark_safe(html)
