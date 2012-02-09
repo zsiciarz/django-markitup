@@ -4,6 +4,8 @@ CHANGES
 tip (unreleased)
 ----------------
 
+- Fixed MarkItUpWidget with custom attrs. Thanks GeyseR.
+
 - Set previewParserPath dynamically rather than requiring it to be set in
   ``set.js``.  Thanks Sebastian Brandt.
 
