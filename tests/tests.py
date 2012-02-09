@@ -244,6 +244,12 @@ class RenderTests(MIUTestCase):
                       widget.render('name', 'value', {'id': 'my_id'}))
 
 
+    def test_widget_render_with_custom_id(self):
+        widget = MarkItUpWidget(attrs={'id': 'my_id'})
+        self.assertIn(self.look_for,
+                      widget.render('name', 'value', {'id': 'my_id'}))
+
+
     def test_widget_render_preview_parser_path(self):
         widget = MarkItUpWidget()
         self.assertIn('mySettings["previewParserPath"] = "/markitup/preview/";',
