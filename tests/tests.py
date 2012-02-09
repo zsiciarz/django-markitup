@@ -247,7 +247,7 @@ class RenderTests(MIUTestCase):
     def test_widget_render_with_custom_id(self):
         widget = MarkItUpWidget(attrs={'id': 'my_id'})
         self.assertIn(self.look_for,
-                      widget.render('name', 'value', {'id': 'my_id'}))
+                      widget.render('name', 'value'))
 
 
     def test_widget_render_preview_parser_path(self):
