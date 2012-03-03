@@ -73,7 +73,10 @@ To assign it to a form field::
 
 When this form is displayed on your site, you must include the form
 media somewhere on the page using ``{{ form.media }}``, or the
-MarkItUpWidget will have no effect.
+MarkItUpWidget will have no effect. By default ``{{ form.media }}``
+also include jQuery library based on your `JQUERY_URL`_
+setting. To prevent including jQuery in form media set `JQUERY_URL`_
+setting to None
 
 MarkItUpWidget accepts three optional keyword arguments:
 ``markitup_set`` and ``markitup_skin`` (see `Choosing a MarkItUp!
@@ -127,6 +130,8 @@ jQuery (if you are already including it yourself), pass any non-zero
 argument to the tag::
 
     {% markitup_media "no-jquery" %}
+
+or set `JQUERY_URL`_ setting to None
 
 If you prefer to link CSS and Javascript from different locations, the
 ``markitup_media`` tag can be replaced with two separate tags,

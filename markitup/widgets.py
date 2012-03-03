@@ -59,13 +59,14 @@ class MarkItUpWidget(MarkupTextarea):
         super(MarkItUpWidget, self).__init__(attrs)
 
     def _media(self):
+        js_media = [absolute_url(settings.JQUERY_URL)] if settings.JQUERY_URL is not None else []
+        js_media = js_media + [absolute_url('markitup/ajax_csrf.js'),
+                               absolute_url('markitup/jquery.markitup.js'),
+                               posixpath.join(self.miu_set, 'set.js')]
         return forms.Media(
             css= {'screen': (posixpath.join(self.miu_skin, 'style.css'),
                              posixpath.join(self.miu_set, 'style.css'))},
-            js=(absolute_url(settings.JQUERY_URL),
-                absolute_url('markitup/ajax_csrf.js'),
-                absolute_url('markitup/jquery.markitup.js'),
-                posixpath.join(self.miu_set, 'set.js')))
+            js=js_media)
     media = property(_media)
 
     def render(self, name, value, attrs=None):
