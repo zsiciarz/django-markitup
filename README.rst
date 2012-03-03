@@ -375,3 +375,6 @@ set the JQUERY_URL setting.  For example::
 This will use the jQuery available at STATIC_URL/jquery.min.js. A relative
 ``JQUERY_URL`` is relative to ``STATIC_URL``.
 
+If you include jQuery library manually in your templates and don't want
+to duplicate it by MarkItUp! you can set ``JQUERY_URL`` to None
+
