@@ -384,7 +384,7 @@ class TemplatetagMediaUrlTests(MIUTestCase):
                 if url:
                     self.assertIn(link, self._get_js())
                 else:
-                    self.assertIsNone(self._get_js())
+                    self.assertNotIn('src=""', self._get_js())
         finally:
             settings.JQUERY_URL = _old_jquery_url
 
@@ -451,8 +451,7 @@ class WidgetMediaUrlTests(TemplatetagMediaUrlTests):
             if url:
                 self.assertIn(link, self._get_js())
             else:
-                settings.JQUERY_URL = 'jquery.min.js'
-                self.assertNotIn('/static/jquery.min.js', self._get_js())
+                self.assertNotIn('src=""', self._get_js())
 
 try:
     from south.modelsinspector import introspector
