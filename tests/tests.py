@@ -346,6 +346,7 @@ class TemplatetagMediaUrlTests(MIUTestCase):
         ('/some/path/jquery.min.js', '/some/path/jquery.min.js'),
         ('http://www.example.com/jquery.min.js', 'http://www.example.com/jquery.min.js'),
         ('https://www.example.com/jquery.min.js', 'https://www.example.com/jquery.min.js'),
+        (None, None)
         )
 
 
@@ -380,7 +381,10 @@ class TemplatetagMediaUrlTests(MIUTestCase):
         try:
             for url, link in self.jquery_urls:
                 settings.JQUERY_URL = url
-                self.assertIn(link, self._get_js())
+                if url:
+                    self.assertIn(link, self._get_js())
+                else:
+                    self.assertIsNone(self._get_js())
         finally:
             settings.JQUERY_URL = _old_jquery_url
 
@@ -441,6 +445,14 @@ class WidgetMediaUrlTests(TemplatetagMediaUrlTests):
             self.assertIn(link, self._get_css(markitup_skin=miu_skin))
 
 
+    def test_jquery_in_media(self):
+        for url, link in self.jquery_urls:
+            settings.JQUERY_URL = url
+            if url:
+                self.assertIn(link, self._get_js())
+            else:
+                settings.JQUERY_URL = 'jquery.min.js'
+                self.assertNotIn('/static/jquery.min.js', self._get_js())
 
 try:
     from south.modelsinspector import introspector
