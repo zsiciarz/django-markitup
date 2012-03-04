@@ -384,7 +384,14 @@ class TemplatetagMediaUrlTests(MIUTestCase):
                 if url:
                     self.assertIn(link, self._get_js())
                 else:
-                    self.assertNotIn('src=""', self._get_js())
+                    self.assertEqual(
+                        self._get_js(),
+                        (
+                            '<script type="text/javascript" src="%(prefix)s/markitup/ajax_csrf.js"></script>\n'
+                            '<script type="text/javascript" src="%(prefix)s/markitup/jquery.markitup.js"></script>\n'
+                            '<script type="text/javascript" src="%(prefix)s/markitup/sets/default/set.js"></script>'
+                            % {'prefix': self.prefix}
+                            ))
         finally:
             settings.JQUERY_URL = _old_jquery_url
 

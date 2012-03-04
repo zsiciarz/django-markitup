@@ -71,12 +71,11 @@ To assign it to a form field::
     class MyForm(forms.Form):
         content = forms.CharField(widget=MarkItUpWidget())
 
-When this form is displayed on your site, you must include the form
-media somewhere on the page using ``{{ form.media }}``, or the
-MarkItUpWidget will have no effect. By default ``{{ form.media }}``
-also include jQuery library based on your `JQUERY_URL`_
-setting. To prevent including jQuery in form media set `JQUERY_URL`_
-setting to None
+When this form is displayed on your site, you must include the form media
+somewhere on the page using ``{{ form.media }}``, or the MarkItUpWidget will
+have no effect. By default ``{{ form.media }}`` also includes the jQuery
+library based on your `JQUERY_URL`_ setting. To prevent including jQuery, set
+the `JQUERY_URL`_ setting to ``None``.
 
 MarkItUpWidget accepts three optional keyword arguments:
 ``markitup_set`` and ``markitup_skin`` (see `Choosing a MarkItUp!
@@ -123,15 +122,10 @@ Then include the MarkItUp! CSS and Javascript in the <head> of your page::
 
     {% markitup_media %}
 
-By default the ``markitup_media`` tag also includes jQuery, based on
-the value of your `JQUERY_URL`_ setting, with a fallback to the
-version hosted at Google Ajax APIs. To suppress the inclusion of
-jQuery (if you are already including it yourself), pass any non-zero
-argument to the tag::
-
-    {% markitup_media "no-jquery" %}
-
-or set `JQUERY_URL`_ setting to None
+By default the ``markitup_media`` tag also includes jQuery, based on the value
+of your `JQUERY_URL`_ setting, with a fallback to the version hosted at Google
+Ajax APIs. To suppress the inclusion of jQuery (if you are already including it
+yourself), set the `JQUERY_URL`_ setting to ``None``.
 
 If you prefer to link CSS and Javascript from different locations, the
 ``markitup_media`` tag can be replaced with two separate tags,
@@ -375,6 +369,5 @@ set the JQUERY_URL setting.  For example::
 This will use the jQuery available at STATIC_URL/jquery.min.js. A relative
 ``JQUERY_URL`` is relative to ``STATIC_URL``.
 
-If you include jQuery library manually in your templates and don't want
-to duplicate it by MarkItUp! you can set ``JQUERY_URL`` to None
-
+If you include the jQuery library manually in your templates and don't want
+``django-markitup`` to include it, set ``JQUERY_URL`` to ``None``.
