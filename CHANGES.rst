@@ -4,6 +4,9 @@ CHANGES
 tip (unreleased)
 ----------------
 
+- Updated to MarkItUp! 1.1.14 and fixed compatibility with jQuery 1.9. Thanks
+  Roman Akinfold!
+
 - Fixed MarkItUpWidget with custom attrs. Thanks GeyseR.
 
 - Set previewParserPath dynamically rather than requiring it to be set in
