@@ -1,8 +1,8 @@
 CHANGES
 =======
 
-tip (unreleased)
-----------------
+1.1.0 (2013.04.26)
+------------------
 
 - Updated to MarkItUp! 1.1.14 and fixed compatibility with jQuery 1.9. Thanks
   Roman Akinfold!
