@@ -4,6 +4,8 @@ CHANGES
 tip (unreleased)
 ----------------
 
+* BACKWARDS-INCOMPATIBLE: Dropped support for Python 2.5 and Django 1.3.
+
 1.1.0 (2013.04.26)
 ------------------
 

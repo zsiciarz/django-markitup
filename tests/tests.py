@@ -151,7 +151,7 @@ class MarkupFieldFormTests(TestCase):
 
     def testFormFieldContents(self):
         form = self.form_class(instance=self.post)
-        self.assertEquals(unicode(form['body']),
+        self.assertHTMLEqual(unicode(form['body']),
                           u'<textarea id="id_body" rows="10" cols="40" name="body">**markdown**</textarea>')
 
 
@@ -171,7 +171,7 @@ class HiddenFieldFormTests(TestCase):
 
     def testHiddenFieldContents(self):
         form = self.form_class(instance=self.post)
-        self.assertEquals(unicode(form['body']), (
+        self.assertHTMLEqual(unicode(form['body']), (
             u'<textarea id="id_body" rows="10" cols="40" name="body">'
             u'[link](http://example.com) &amp; &quot;text&quot;'
             u'</textarea><input type="hidden" name="initial-body" value="'
@@ -373,7 +373,7 @@ class TemplatetagMediaUrlTests(MIUTestCase):
 <script type="text/javascript" src="%(prefix)s/markitup/ajax_csrf.js"></script>
 <script type="text/javascript" src="%(prefix)s/markitup/jquery.markitup.js"></script>
 <script type="text/javascript" src="%(prefix)s/markitup/sets/default/set.js"></script>""" % {'prefix': self.prefix}
-        self.assertEquals(self._get_media(), out)
+        self.assertHTMLEqual(self._get_media(), out)
 
 
     def test_jquery_url(self):
@@ -384,7 +384,7 @@ class TemplatetagMediaUrlTests(MIUTestCase):
                 if url:
                     self.assertIn(link, self._get_js())
                 else:
-                    self.assertEqual(
+                    self.assertHTMLEqual(
                         self._get_js(),
                         (
                             '<script type="text/javascript" src="%(prefix)s/markitup/ajax_csrf.js"></script>\n'

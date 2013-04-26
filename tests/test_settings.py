@@ -16,3 +16,5 @@ STATIC_URL = "/static/"
 ROOT_URLCONF = "tests.urls"
 
 MARKITUP_FILTER = ("tests.filter.testfilter", {"arg": "replacement"})
+
+SECRET_KEY = 'test-secret'
