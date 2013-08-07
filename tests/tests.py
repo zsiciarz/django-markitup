@@ -288,7 +288,7 @@ class RenderTests(MIUTestCase):
 
 
 class AutoPreviewSettingTests(RenderTests):
-    look_for = "$('a[title=\"Preview\"]').trigger('mouseup');"
+    look_for = "$('a[title=\"Preview\"]').trigger('mousedown');"
     auto_preview_override = False
 
 

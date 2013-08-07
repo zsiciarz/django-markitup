@@ -6,7 +6,7 @@ $(document).ready(function() {
     {% if preview_url %}mySettings["previewParserPath"] = "{{ preview_url }}";{% endif %}
     element.markItUp(mySettings);
   }
-  {% if AUTO_PREVIEW %}$('a[title="Preview"]').trigger('mouseup');{% endif %}
+  {% if AUTO_PREVIEW %}$('a[title="Preview"]').trigger('mousedown');{% endif %}
 });
 })(jQuery);
 </script>

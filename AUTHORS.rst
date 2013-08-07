@@ -1,3 +1,4 @@
+Alexandr Shurigin <http://brainstorage.me/phpdude>
 Aram Dulyan
 Carl Meyer <carl@dirtcircle.com>
 Fursov Sergey <GeyseR85@gmail.com>
