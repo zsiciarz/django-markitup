@@ -75,7 +75,7 @@ class MarkItUpWidget(MarkupTextarea):
         final_attrs = self.build_attrs(attrs)
 
         if self.auto_preview:
-            auto_preview = "$('a[title=\"Preview\"]').trigger('mouseup');"
+            auto_preview = "$('a[title=\"Preview\"]').trigger('mousedown');"
         else: auto_preview = ''
 
         try:
