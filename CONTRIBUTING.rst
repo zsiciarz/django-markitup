@@ -3,6 +3,10 @@ Contributing
 
 Thanks for your interest in contributing to ``django-markitup``!
 
+The code lives at https://bitbucket.org/carljm/django-markitup with a mirror at
+https://github.com/carljm/django-markitup - pull requests can be submitted to
+either repository.
+
 Features and bugfixes that involve modifying Python code should be accompanied
 by tests in ``tests/tests.py``, and all existing and new tests should pass. To
 run tests on the full matrix of all supported Python and Django versions, ``pip
