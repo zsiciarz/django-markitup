@@ -1,11 +1,13 @@
 CHANGES
 =======
 
-tip (unreleased)
+2.0 (2013.11.06)
 ----------------
 
 * Fixed ``MARKITUP_AUTO_PREVIEW``; MarkItUp! now observes mousedown events, not
   mouseup. Thanks Alexandr Shurigin.
+
+* Added support for Django 1.6.
 
 * BACKWARDS-INCOMPATIBLE: Dropped support for Python 2.5 and Django 1.3.
 
