@@ -1,5 +1,6 @@
 from __future__ import with_statement
 
+import json
 import re
 
 from django.core import serializers
@@ -124,11 +125,20 @@ class MarkupFieldSerializationTests(TestCase):
 
 
     def testSerializeJSON(self):
-        self.assertEquals(self.stream,
-                          '[{"pk": 1, "model": "tests.post", '
-                          '"fields": {"body": "replace this thing", '
-                          '"_body_rendered": "replacement thing", '
-                          '"title": "example post"}}]')
+        self.assertEquals(
+            json.loads(self.stream),
+            [
+                {
+                    "pk": 1,
+                    "model": "tests.post",
+                    "fields": {
+                        "body": "replace this thing",
+                        "_body_rendered": "replacement thing",
+                        "title": "example post",
+                        }
+                    }
+                ]
+            )
 
 
     def testDeserialize(self):
