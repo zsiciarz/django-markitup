@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<head>
+  <title>django-markitup demo</title>
+  {{ form.media }}
+  <script src="{% static 'jquery.cookie.js' %}"></script>
+  <script src="{% static 'ajax_csrf.js' %}"></script>
+</head>
+<html>
+  <form>
+    {% csrf_token %}
+    {{ form.content }}
+  </form>
+</html>
