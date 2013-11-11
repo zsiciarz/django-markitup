@@ -357,12 +357,11 @@ default. Defaults to ``False``.
 JQUERY_URL
 ----------
 
-MarkItUp! requires the jQuery Javascript library.  By default,
-django-markitup links to the most recent minor version of jQuery 1.6
-available at ajax.googleapis.com (via the URL
-``http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js``).
-If you wish to use a different version of jQuery, or host it yourself,
-set the JQUERY_URL setting.  For example::
+MarkItUp! requires the jQuery Javascript library.  By default, django-markitup
+links to jQuery 2.0.3 at ajax.googleapis.com (via the URL
+``http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js``).  If you
+wish to use a different version of jQuery, or host it yourself, set the
+JQUERY_URL setting.  For example::
 
     JQUERY_URL = 'jquery.min.js'
 

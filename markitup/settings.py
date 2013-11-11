@@ -7,4 +7,4 @@ MARKITUP_SET = getattr(settings, 'MARKITUP_SET', 'markitup/sets/default')
 MARKITUP_SKIN = getattr(settings, 'MARKITUP_SKIN', 'markitup/skins/simple')
 JQUERY_URL = getattr(
     settings, 'JQUERY_URL',
-    'http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js')
+    'http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js')
