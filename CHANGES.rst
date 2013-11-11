@@ -4,6 +4,8 @@ CHANGES
 tip (unreleased)
 ----------------
 
+* Fixed ``MARKITUP_AUTO_PREVIEW``; the "fix" in 2.0 was wrong and broke it.
+
 
 2.0 (2013.11.06)
 ----------------
