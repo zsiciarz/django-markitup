@@ -1,10 +1,10 @@
 CHANGES
 =======
 
-tip (unreleased)
+2.1 (2013.11.11)
 ----------------
 
-* Update default jQuery version from 1.6 to 2.0.3.
+* Updated default jQuery version from 1.6 to 2.0.3.
 
 * Fixed ``MARKITUP_AUTO_PREVIEW``; the "fix" in 2.0 was wrong and broke it.
 
