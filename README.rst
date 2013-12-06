@@ -48,10 +48,9 @@ To use ``django-markitup`` in your Django project:
 Dependencies
 ------------
 
-``django-markitup`` 1.0 requires `Django`_ 1.3 or later and Python 2.5 or
-later. The 0.6.x series supports `Django`_ 1.1 and 1.2; it is missing
-1.3-compatibility additions but otherwise has feature-parity with 1.0, so
-remains a fine choice for older Django versions.
+``django-markitup`` 2.x requires `Django`_ 1.4 or later and Python 2.6 or later.
+
+``django-markitup`` 1.x requires `Django`_ 1.3 or later and Python 2.5 or later.
 
 `MarkItUp!`_ is not an external dependency; it is bundled with
 ``django-markitup``.
