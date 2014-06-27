@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 try:
     from docutils.core import publish_parts
     def render_rest(markup, **docutils_settings):
