@@ -27,6 +27,8 @@ django-template-utils_.
 .. _django-template-utils: http://code.google.com/p/django-template-utils/
 
 """
+from __future__ import unicode_literals
+
 from django.utils.functional import curry, wraps
 
 from markitup.settings import MARKITUP_PREVIEW_FILTER

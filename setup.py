@@ -9,7 +9,7 @@ try:
         p = subprocess.Popen(['hg', 'parents', r'--template={rev}\n'],
                              stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         if not p.returncode:
-            fh = open('HGREV', 'w')
+            fh = open('HGREV', 'wb')
             fh.write(p.communicate()[0].splitlines()[0])
             fh.close()
 except (OSError, IndexError):
@@ -36,7 +36,7 @@ def _static_files(prefix):
 
 setup(
     name='django-markitup',
-    version='2.1',
+    version='2.2',
     description='Markup handling for Django using the MarkItUp! universal markup editor',
     long_description=long_description,
     author='Carl Meyer',
@@ -50,6 +50,10 @@ setup(
         'License :: OSI Approved :: BSD License',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
+        'Programming Language :: Python :: 2.6',
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: 3.4',
         'Framework :: Django',
     ],
     zip_safe=False,

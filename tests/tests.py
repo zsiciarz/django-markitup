@@ -1,4 +1,4 @@
-from __future__ import with_statement
+from __future__ import unicode_literals
 
 import json
 import re
@@ -17,13 +17,11 @@ from markitup import settings
 from markitup.templatetags.markitup_tags import _get_markitup_context
 from markitup.widgets import MarkItUpWidget, MarkupTextarea, AdminMarkItUpWidget
 
-from models import Post, AbstractParent, CallableDefault
-
+from .models import Post, AbstractParent, CallableDefault
 
 
 def test_filter(text, **kwargs):
-    return unicode(text) + unicode(kwargs)
-
+    return str(text) + str(kwargs)
 
 
 class MarkupFieldTests(TestCase):
@@ -34,54 +32,46 @@ class MarkupFieldTests(TestCase):
         self.empty_post = Post.objects.create(title='empty post',
                                         body='')
 
-
-
     def testUnicodeRender(self):
-        self.assertEquals(unicode(self.post.body),
+        self.assertEqual(str(self.post.body),
                           u'replacement text')
 
     def testLength(self):
-        self.assertEquals(len(self.post.body), 16)
-        self.assertEquals(len(self.empty_post.body), 0)
+        self.assertEqual(len(self.post.body), 16)
+        self.assertEqual(len(self.empty_post.body), 0)
 
     def testTruth(self):
         self.assertTrue(self.post.body)
         self.assertFalse(self.empty_post.body)
 
     def testRaw(self):
-        self.assertEquals(self.post.body.raw, 'replace this text')
-
+        self.assertEqual(self.post.body.raw, 'replace this text')
 
     def testRendered(self):
-        self.assertEquals(self.post.body.rendered,
+        self.assertEqual(self.post.body.rendered,
                           u'replacement text')
-
 
     def testLoadBack(self):
         post = Post.objects.get(pk=self.post.pk)
-        self.assertEquals(post.body.raw, self.post.body.raw)
-        self.assertEquals(post.body.rendered, self.post.body.rendered)
-
+        self.assertEqual(post.body.raw, self.post.body.raw)
+        self.assertEqual(post.body.rendered, self.post.body.rendered)
 
     def testAssignToBody(self):
         self.post.body = 'replace this other text'
         self.post.save()
-        self.assertEquals(unicode(self.post.body),
-                          u'replacement other text')
-
+        self.assertEqual(str(self.post.body),
+                         u'replacement other text')
 
     def testAssignToRaw(self):
         self.post.body.raw = 'new text, replace this'
         self.post.save()
-        self.assertEquals(unicode(self.post.body),
-                          u'new text, replacement')
-
+        self.assertEqual(str(self.post.body),
+                         u'new text, replacement')
 
     def testAssignToRendered(self):
         def _invalid_assignment():
             self.post.body.rendered = 'this should fail'
         self.assertRaises(AttributeError, _invalid_assignment)
-
 
     def testMarkSafe(self):
         """
@@ -91,8 +81,7 @@ class MarkupFieldTests(TestCase):
 
         """
         self.post.body = mark_safe(self.post.body)
-        self.assertEquals(self.post.body.raw, 'replace this text')
-
+        self.assertEqual(self.post.body.raw, 'replace this text')
 
     def testAbstractInheritance(self):
         """
@@ -116,16 +105,14 @@ class MarkupFieldTests(TestCase):
 #                          u"**markdown**{'some_arg': 'some_val'}")
 
 
-
 class MarkupFieldSerializationTests(TestCase):
     def setUp(self):
         self.post = Post.objects.create(title='example post',
                                         body='replace this thing')
         self.stream = serializers.serialize('json', Post.objects.all())
 
-
     def testSerializeJSON(self):
-        self.assertEquals(
+        self.assertEqual(
             json.loads(self.stream),
             [
                 {
@@ -140,12 +127,10 @@ class MarkupFieldSerializationTests(TestCase):
                 ]
             )
 
-
     def testDeserialize(self):
-        self.assertEquals(list(serializers.deserialize("json",
+        self.assertEqual(list(serializers.deserialize("json",
                                                        self.stream))[0].object,
                           self.post)
-
 
 
 class MarkupFieldFormTests(TestCase):
@@ -153,24 +138,20 @@ class MarkupFieldFormTests(TestCase):
         self.post = Post(title='example post', body='**markdown**')
         self.form_class = modelform_factory(Post)
 
-
     def testWidget(self):
-        self.assertEquals(self.form_class().fields['body'].widget.__class__,
+        self.assertEqual(self.form_class().fields['body'].widget.__class__,
                           MarkupTextarea)
-
 
     def testFormFieldContents(self):
         form = self.form_class(instance=self.post)
-        self.assertHTMLEqual(unicode(form['body']),
+        self.assertHTMLEqual(str(form['body']),
                           u'<textarea id="id_body" rows="10" cols="40" name="body">**markdown**</textarea>')
-
 
     def testAdminFormField(self):
         ma = admin.ModelAdmin(Post, admin.site)
-        self.assertEquals(ma.formfield_for_dbfield(
+        self.assertEqual(ma.formfield_for_dbfield(
                 Post._meta.get_field('body')).widget.__class__,
                           AdminMarkItUpWidget)
-
 
 
 class HiddenFieldFormTests(TestCase):
@@ -178,17 +159,15 @@ class HiddenFieldFormTests(TestCase):
         self.post = CallableDefault(body='[link](http://example.com) & "text"')
         self.form_class = modelform_factory(CallableDefault)
 
-
     def testHiddenFieldContents(self):
         form = self.form_class(instance=self.post)
-        self.assertHTMLEqual(unicode(form['body']), (
+        self.assertHTMLEqual(str(form['body']), (
             u'<textarea id="id_body" rows="10" cols="40" name="body">'
             u'[link](http://example.com) &amp; &quot;text&quot;'
             u'</textarea><input type="hidden" name="initial-body" value="'
             u'[link](http://example.com) &amp; &quot;text&quot;" '
             u'id="initial-id_body" />'
         ))
-
 
 
 class PreviewTests(TestCase):
@@ -199,14 +178,12 @@ class PreviewTests(TestCase):
         self.assertContains(response, 'replacement with something else',
                             status_code=200)
 
-
     def test_preview_css(self):
         c = Client()
         response = c.post('/markitup/preview/',
                           {'data': 'replace this with something else'})
         self.assertContains(response, '/static/markitup/preview.css',
                             status_code=200)
-
 
     def test_preview_template(self):
         c = Client()
@@ -215,14 +192,12 @@ class PreviewTests(TestCase):
         self.assertTemplateUsed(response, 'markitup/preview.html')
 
 
-
 class MIUTestCase(TestCase):
     def assertIn(self, needle, haystack, reverse=False):
         func = reverse and self.failIf or self.failUnless
         descrip = reverse and 'in' or 'not in'
         func(needle in haystack,
              "'%s' %s '%s'" % (needle, descrip, haystack))
-
 
     def render(self, template_string, context_dict=None):
         """A shortcut for testing template output."""
@@ -234,56 +209,48 @@ class MIUTestCase(TestCase):
         return t.render(c).strip()
 
 
-
 class TemplatefilterTests(MIUTestCase):
     def test_render_markup(self):
         tpl_string = "{% load markitup_tags %}{{ content|render_markup }}"
-        self.assertEquals('replacement text', self.render(tpl_string,
-                                                          {'content': 'replace this text'}))
-
+        self.assertEqual('replacement text',
+                         self.render(tpl_string, {'content':
+                                                  'replace this text'}))
 
 
 class RenderTests(MIUTestCase):
     look_for = 'var element = $("#my_id");'
     auto_preview_override = True
 
-
     def test_widget_render(self):
         widget = MarkItUpWidget()
         self.assertIn(self.look_for,
                       widget.render('name', 'value', {'id': 'my_id'}))
-
 
     def test_widget_render_with_custom_id(self):
         widget = MarkItUpWidget(attrs={'id': 'my_id'})
         self.assertIn(self.look_for,
                       widget.render('name', 'value'))
 
-
     def test_widget_render_preview_parser_path(self):
         widget = MarkItUpWidget()
         self.assertIn('mySettings["previewParserPath"] = "/markitup/preview/";',
                       widget.render('name', 'value', {'id': 'my_id'}))
-
 
     def test_templatetag_render(self):
         template = """{% load markitup_tags %}{% markitup_editor "my_id" %}"""
         self.assertIn(self.look_for,
                       self.render(template))
 
-
     def test_templatetag_render_preview_parser_path(self):
         template = """{% load markitup_tags %}{% markitup_editor "my_id" %}"""
         self.assertIn('mySettings["previewParserPath"] = "/markitup/preview/";',
                       self.render(template))
-
 
     def test_per_widget_auto_preview_override(self):
         widget = MarkItUpWidget(auto_preview=self.auto_preview_override)
         self.assertIn(AutoPreviewSettingTests.look_for,
                       widget.render('name', 'value', {'id': 'my_id'}),
                       reverse=not self.auto_preview_override)
-
 
     def test_per_ttag_auto_preview_override(self):
         if self.auto_preview_override:
@@ -296,25 +263,21 @@ class RenderTests(MIUTestCase):
                       reverse=not self.auto_preview_override)
 
 
-
 class AutoPreviewSettingTests(RenderTests):
-    look_for = "$('a[title=\"Preview\"]').trigger('mousedown');"
+    look_for = "$('a[title=\"Preview\"]').trigger('mouseup');"
     auto_preview_override = False
-
 
     def setUp(self):
         self._old_auto = settings.MARKITUP_AUTO_PREVIEW
         settings.MARKITUP_AUTO_PREVIEW = True
 
-
     def tearDown(self):
         settings.MARKITUP_AUTO_PREVIEW = self._old_auto
 
 
-
 class TemplatetagMediaUrlTests(MIUTestCase):
+    maxDiff = None
     prefix = '/static'
-
 
     # helper abstractions so we can reuse same tests for widget and
     # templatetag methods
@@ -323,31 +286,25 @@ class TemplatetagMediaUrlTests(MIUTestCase):
         tags = get_library("markitup_tags")
         tags._markitup_context = _get_markitup_context()
 
-
     multiple_newlines_re = re.compile('\n+')
-
 
     def _compress_newlines(self, s):
         # template includes cause extra newlines in some cases
         # where form.media always outputs only single newlines
         return self.multiple_newlines_re.sub('\n', s)
 
-
     def _get_media(self):
         self._reset_context()
         return self._compress_newlines(
             self.render("{% load markitup_tags %}{% markitup_media %}"))
 
-
     def _get_css(self):
         self._reset_context()
         return self.render("{% load markitup_tags %}{% markitup_css %}")
 
-
     def _get_js(self):
         self._reset_context()
         return self.render("{% load markitup_tags %}{% markitup_js %}")
-
 
     # JQUERY_URL settings and resulting link
     jquery_urls = (
@@ -358,7 +315,6 @@ class TemplatetagMediaUrlTests(MIUTestCase):
         ('https://www.example.com/jquery.min.js', 'https://www.example.com/jquery.min.js'),
         (None, None)
         )
-
 
     # MARKITUP_SET settings and resulting CSS link
     set_urls = (
@@ -372,19 +328,16 @@ class TemplatetagMediaUrlTests(MIUTestCase):
         ('https://www.example.com/path/', 'https://www.example.com/path/%(file)s'),
         )
 
-
     skin_urls = set_urls
-
 
     def test_all_media(self):
         out = """<link href="%(prefix)s/markitup/skins/simple/style.css" type="text/css" media="screen" rel="stylesheet" />
 <link href="%(prefix)s/markitup/sets/default/style.css" type="text/css" media="screen" rel="stylesheet" />
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 <script type="text/javascript" src="%(prefix)s/markitup/ajax_csrf.js"></script>
 <script type="text/javascript" src="%(prefix)s/markitup/jquery.markitup.js"></script>
 <script type="text/javascript" src="%(prefix)s/markitup/sets/default/set.js"></script>""" % {'prefix': self.prefix}
         self.assertHTMLEqual(self._get_media(), out)
-
 
     def test_jquery_url(self):
         _old_jquery_url = settings.JQUERY_URL
@@ -405,7 +358,6 @@ class TemplatetagMediaUrlTests(MIUTestCase):
         finally:
             settings.JQUERY_URL = _old_jquery_url
 
-
     def test_set_via_settings(self):
         _old_miu_set = settings.MARKITUP_SET
         try:
@@ -417,7 +369,6 @@ class TemplatetagMediaUrlTests(MIUTestCase):
                 self.assertIn(js_link, self._get_js())
         finally:
             settings.MARKITUP_SET = _old_miu_set
-
 
     def test_skin_via_settings(self):
         _old_miu_skin = settings.MARKITUP_SKIN
@@ -431,22 +382,20 @@ class TemplatetagMediaUrlTests(MIUTestCase):
 
 
 class WidgetMediaUrlTests(TemplatetagMediaUrlTests):
+    maxDiff = None
+
     def _get_media_obj(self, *args, **kwargs):
         widget = MarkItUpWidget(*args, **kwargs)
         return widget.media
 
-
     def _get_media(self, *args, **kwargs):
         return str(self._get_media_obj(*args, **kwargs))
-
 
     def _get_css(self, *args, **kwargs):
         return str(self._get_media_obj(*args, **kwargs)['css'])
 
-
     def _get_js(self, *args, **kwargs):
         return str(self._get_media_obj(*args, **kwargs)['js'])
-
 
     def test_set_via_argument(self):
         for miu_set, link in self.set_urls:
@@ -455,12 +404,10 @@ class WidgetMediaUrlTests(TemplatetagMediaUrlTests):
             self.assertIn(css_link, self._get_css(markitup_set=miu_set))
             self.assertIn(js_link, self._get_js(markitup_set=miu_set))
 
-
     def test_skin_via_argument(self):
         for miu_skin, link in self.skin_urls:
             link = link % {'prefix': self.prefix, 'file': 'style.css'}
             self.assertIn(link, self._get_css(markitup_skin=miu_skin))
-
 
     def test_jquery_in_media(self):
         for url, link in self.jquery_urls:
@@ -481,11 +428,11 @@ class SouthFreezingTests(TestCase):
     def test_introspector_adds_no_rendered_field(self):
         mf = Post._meta.get_field('body')
         args, kwargs = introspector(mf)
-        self.assertEquals(kwargs['no_rendered_field'], 'True')
+        self.assertEqual(kwargs['no_rendered_field'], 'True')
 
     @skipUnless(introspector, "South not available")
     def test_no_rendered_field_works(self):
-        from models import NoRendered
+        from .models import NoRendered
         self.assertRaises(FieldDoesNotExist,
                           NoRendered._meta.get_field,
                           '_body_rendered')

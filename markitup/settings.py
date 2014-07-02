@@ -1,3 +1,5 @@
+from __future__ import unicode_literals
+
 from django.conf import settings
 
 MARKITUP_PREVIEW_FILTER = getattr(settings, 'MARKITUP_PREVIEW_FILTER',
