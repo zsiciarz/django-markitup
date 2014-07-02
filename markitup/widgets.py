@@ -4,6 +4,9 @@ widgets for django-markitup
 Time-stamp: <2011-11-26 14:39:52 carljm widgets.py>
 
 """
+
+from __future__ import unicode_literals
+
 from django import forms
 from django.utils.safestring import mark_safe
 from django.contrib.admin.widgets import AdminTextareaWidget

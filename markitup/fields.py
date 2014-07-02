@@ -1,5 +1,8 @@
+from __future__ import unicode_literals
+
 from django.conf import settings
 from django.db import models
+from django.utils.encoding import python_2_unicode_compatible
 from django.utils.safestring import mark_safe, SafeData
 from django.utils.functional import curry
 from django.core.exceptions import ImproperlyConfigured
@@ -15,12 +18,13 @@ def _get_render_func(dotted_path, **kwargs):
 try:
     render_func = _get_render_func(settings.MARKITUP_FILTER[0],
                                    **settings.MARKITUP_FILTER[1])
-except ImportError, e:
+except ImportError as e:
     raise ImproperlyConfigured("Could not import MARKITUP_FILTER %s: %s" %
                                (settings.MARKITUP_FILTER, e))
-except AttributeError, e:
+except AttributeError as e:
     raise ImproperlyConfigured("MARKITUP_FILTER setting is required")
 
+@python_2_unicode_compatible
 class Markup(SafeData):
     def __init__(self, instance, field_name, rendered_field_name):
         # instead of storing actual values store a reference to the instance
@@ -42,7 +46,7 @@ class Markup(SafeData):
     rendered = property(_get_rendered)
 
     # allows display via templates to work without safe filter
-    def __unicode__(self):
+    def __str__(self):
         return mark_safe(self.rendered)
 
     # Return length of rendered string so that bool tests work as expected
@@ -128,4 +132,3 @@ try:
                             patterns=['markitup\.fields\.'])
 except ImportError:
     pass
-

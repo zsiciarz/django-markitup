@@ -1,4 +1,7 @@
-from os.path import dirname, join
+from __future__ import unicode_literals
+
+from os.path import dirname
+
 MIU_TEST_ROOT = dirname(__file__)
 
 INSTALLED_APPS = [
