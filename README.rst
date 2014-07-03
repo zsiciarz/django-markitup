@@ -48,7 +48,7 @@ To use ``django-markitup`` in your Django project:
 Dependencies
 ------------
 
-``django-markitup`` 2.x requires `Django`_ 1.4 or later and Python 2.6 or later.
+``django-markitup`` 2.x requires `Django`_ 1.4 or later and Python 2.6+ or 3.3+.
 
 ``django-markitup`` 1.x requires `Django`_ 1.3 or later and Python 2.5 or later.
 
