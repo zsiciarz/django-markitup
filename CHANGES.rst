@@ -1,10 +1,10 @@
 CHANGES
 =======
 
-2.2 (not released)
-------------------
+2.2 (2014.07.03)
+----------------
 
-* Added Python 3.3+ support.
+* Added Python 3.3+ support. Thanks Berker Peksag.
 
 
 2.1 (2013.11.11)
