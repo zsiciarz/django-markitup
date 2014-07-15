@@ -37,6 +37,7 @@ if MARKITUP_PREVIEW_FILTER is None:
     filter_func = lambda text: text
 else:
     filter_path, filter_kwargs = MARKITUP_PREVIEW_FILTER
-    module, funcname = filter_path.rsplit('.', 1)
+    # Don't coerce to unicode on python 2
+    module, funcname = filter_path.rsplit(str('.'), 1)
     func = getattr(__import__(module, {}, {}, [funcname]), funcname)
     filter_func = wraps(func)(curry(func, **filter_kwargs))

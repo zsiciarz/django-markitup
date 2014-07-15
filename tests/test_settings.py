@@ -18,6 +18,7 @@ STATIC_URL = "/static/"
 
 ROOT_URLCONF = "tests.urls"
 
-MARKITUP_FILTER = ("tests.filter.testfilter", {"arg": "replacement"})
+# Use str so this isn't unicode on python 2
+MARKITUP_FILTER = (str("tests.filter.testfilter"), {"arg": "replacement"})
 
 SECRET_KEY = 'test-secret'

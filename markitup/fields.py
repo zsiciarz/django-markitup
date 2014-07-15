@@ -11,7 +11,8 @@ from markitup import widgets
 _rendered_field_name = lambda name: '_%s_rendered' % name
 
 def _get_render_func(dotted_path, **kwargs):
-    (module, func) = dotted_path.rsplit('.', 1)
+    # Don't coerce to unicode on python 2
+    (module, func) = dotted_path.rsplit(str('.'), 1)
     func = getattr(__import__(module, {}, {}, [func]), func)
     return curry(func, **kwargs)
 
