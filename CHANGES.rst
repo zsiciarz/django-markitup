@@ -1,6 +1,14 @@
 CHANGES
 =======
 
+tip (unreleased)
+----------------
+
+* Fixed regression under Python 2 with MARKITUP_FILTER and
+  MARKITUP_PREVIEW_FILTER. Thanks Berker Peksag and Neil Muller for the report,
+  and Neil Muller for the fix.
+
+
 2.2 (2014.07.03)
 ----------------
 
