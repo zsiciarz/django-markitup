@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('title', models.CharField(max_length=1024)),
-                ('details', markitup.fields.MarkupField(help_text=b'A markitup field')),
+                ('details', markitup.fields.MarkupField(help_text=b'A markitup field', no_rendered_field=True)),
                 ('_details_rendered', models.TextField(editable=False, blank=True)),
             ],
             options={
