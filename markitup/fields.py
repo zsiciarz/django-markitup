@@ -104,7 +104,10 @@ class MarkupField(models.TextField):
     def deconstruct(self):
         name, path, args, kwargs = super(MarkupField, self).deconstruct()
         # Force add_rendered_field to False for migrations
-        kwargs['no_rendered_field'] = self.add_rendered_field
+        # deconstruct can be called multiple times during the migration,
+        # so setting it to self.add_rendered_field, as done for south
+        # migrations, may do the wrong thing.
+        kwargs['no_rendered_field'] = True
         return name, path, args, kwargs
 
     # this method should be renamed to get_prep_value but
