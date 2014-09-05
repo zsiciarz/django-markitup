@@ -8,6 +8,10 @@ def runtests(*test_args):
 
     os.environ['DJANGO_SETTINGS_MODULE'] = 'tests.test_settings'
 
+    import django
+    if hasattr(django, 'setup'):
+        django.setup()
+
     parent = os.path.dirname(os.path.abspath(__file__))
     sys.path.insert(0, parent)
     try:
