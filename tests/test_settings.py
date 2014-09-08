@@ -22,3 +22,5 @@ ROOT_URLCONF = "tests.urls"
 MARKITUP_FILTER = (str("tests.filter.testfilter"), {"arg": "replacement"})
 
 SECRET_KEY = 'test-secret'
+
+MIDDLEWARE_CLASSES = []

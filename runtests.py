@@ -8,18 +8,19 @@ def runtests(*test_args):
 
     os.environ['DJANGO_SETTINGS_MODULE'] = 'tests.test_settings'
 
+    import django
+
+    if django.VERSION >= (1, 7):
+        django.setup()
+
     parent = os.path.dirname(os.path.abspath(__file__))
     sys.path.insert(0, parent)
     try:
-        from django.test.simple import DjangoTestSuiteRunner
-        def run_tests(test_args, verbosity, interactive):
-            runner = DjangoTestSuiteRunner(
-                verbosity=verbosity, interactive=interactive, failfast=False)
-            return runner.run_tests(test_args)
+        from django.test.runner import DiscoverRunner as Runner
     except ImportError:
-        # for Django versions that don't have DjangoTestSuiteRunner
-        from django.test.simple import run_tests
-    failures = run_tests(test_args, verbosity=1, interactive=True)
+        from django.test.simple import DjangoTestSuiteRunner as Runner
+    failures = Runner(
+        verbosity=1, interactive=True, failfast=False).run_tests(test_args)
     sys.exit(failures)
 
 
