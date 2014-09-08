@@ -101,6 +101,15 @@ class MarkupField(models.TextField):
         value = self._get_val_from_obj(obj)
         return value.raw
 
+    def deconstruct(self):
+        name, path, args, kwargs = super(MarkupField, self).deconstruct()
+        # Force add_rendered_field to False for migrations
+        # deconstruct can be called multiple times during the migration,
+        # so setting it to self.add_rendered_field, as done for south
+        # migrations, may do the wrong thing.
+        kwargs['no_rendered_field'] = True
+        return name, path, args, kwargs
+
     # this method should be renamed to get_prep_value but
     # for django 1.1 compatibility only signature is updated
     def get_db_prep_value(self, value, connection=None, prepared=False):

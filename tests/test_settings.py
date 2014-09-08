@@ -8,6 +8,13 @@ INSTALLED_APPS = [
     "markitup",
     "tests"]
 
+try:
+    # Add test_migrations if Django supports native migrations
+    from django.db import migrations
+    INSTALLED_APPS.append('tests.test_migration')
+except ImportError:
+    pass
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3"

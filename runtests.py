@@ -9,8 +9,7 @@ def runtests(*test_args):
     os.environ['DJANGO_SETTINGS_MODULE'] = 'tests.test_settings'
 
     import django
-
-    if django.VERSION >= (1, 7):
+    if hasattr(django, 'setup'):
         django.setup()
 
     parent = os.path.dirname(os.path.abspath(__file__))
