@@ -1,8 +1,8 @@
 CHANGES
 =======
 
-tip (unreleased)
-----------------
+2.2.2 (2014.09.08)
+------------------
 
 * Adapted MarkupField to work with Django 1.7 migrations. Merge of
   BB-15. Thanks Neil Muller for report and fix.
