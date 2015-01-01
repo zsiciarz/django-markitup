@@ -77,32 +77,15 @@ class MarkItUpWidget(MarkupTextarea):
 
         final_attrs = self.build_attrs(attrs)
 
-        if self.auto_preview:
-            auto_preview = "$('a[title=\"Preview\"]').trigger('mouseup');"
-        else: auto_preview = ''
-
         try:
-            preview_url = (
-                'mySettings["previewParserPath"] = "%s";'
-                % reverse('markitup_preview'))
+            preview_url = reverse('markitup_preview')
         except NoReverseMatch:
-           preview_url = "";
+            preview_url = ""
 
-        html += """
-        <script type="text/javascript">
-        (function($) {
-          $(document).ready(function() {
-            var element = $("#%(id)s");
-            if(!element.hasClass("markItUpEditor")) {
-              %(preview_url)s
-              element.markItUp(mySettings);
-            }
-            %(auto_preview)s
-          });
-          })(jQuery);
-        </script>
-        """ % {'id': final_attrs['id'], 'auto_preview': auto_preview,
-               'preview_url': preview_url}
+        html += render_to_string('markitup/editor.html',
+                                 {'textarea_id': final_attrs['id'],
+                                 'AUTO_PREVIEW': self.auto_preview,
+                                 'preview_url': preview_url})
 
         return mark_safe(html)
 
