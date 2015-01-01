@@ -1,20 +1,14 @@
-"""
-widgets for django-markitup
-
-Time-stamp: <2011-11-26 14:39:52 carljm widgets.py>
-
-"""
-
 from __future__ import unicode_literals
 
+import posixpath
 from django import forms
-from django.utils.safestring import mark_safe
 from django.contrib.admin.widgets import AdminTextareaWidget
-from django.core.urlresolvers import reverse, NoReverseMatch
-
+from django.core.urlresolvers import NoReverseMatch, reverse
+from django.template.loader import render_to_string
+from django.utils.safestring import mark_safe
 from markitup import settings
 from markitup.util import absolute_url
-import posixpath
+
 
 class MarkupInput(forms.Widget):
     def render(self, name, value, attrs=None):
@@ -28,8 +22,10 @@ class MarkupInput(forms.Widget):
                 pass
         return super(MarkupInput, self).render(name, value, attrs)
 
+
 class MarkupTextarea(MarkupInput, forms.Textarea):
     pass
+
 
 class MarkupHiddenWidget(MarkupInput, forms.HiddenInput):
     pass
@@ -67,8 +63,8 @@ class MarkItUpWidget(MarkupTextarea):
                                absolute_url('markitup/jquery.markitup.js'),
                                posixpath.join(self.miu_set, 'set.js')]
         return forms.Media(
-            css= {'screen': (posixpath.join(self.miu_skin, 'style.css'),
-                             posixpath.join(self.miu_set, 'style.css'))},
+            css={'screen': (posixpath.join(self.miu_skin, 'style.css'),
+                            posixpath.join(self.miu_set, 'style.css'))},
             js=js_media)
     media = property(_media)
 
