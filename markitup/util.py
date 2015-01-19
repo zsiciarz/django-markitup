@@ -1,15 +1,9 @@
 from __future__ import unicode_literals
 
-import posixpath
-
-from django.conf import settings as django_settings
-
-from markitup import settings
+from django.contrib.staticfiles.storage import staticfiles_storage
 
 
-def absolute_url(path, prefix=None):
-    if prefix is None:
-        prefix = django_settings.STATIC_URL
+def absolute_url(path):
     if path.startswith(u'http://') or path.startswith(u'https://') or path.startswith(u'/'):
         return path
-    return posixpath.join(prefix, path)
+    return staticfiles_storage.url(path)

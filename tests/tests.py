@@ -10,6 +10,7 @@ from django.template import Template, Context, get_library
 from django.test import TestCase, Client
 from django.utils.safestring import mark_safe
 from django.utils.unittest import skipUnless
+from django.test.utils import override_settings
 
 from django.contrib import admin
 
@@ -279,6 +280,14 @@ class TemplatetagMediaUrlTests(MIUTestCase):
     maxDiff = None
     prefix = '/static'
 
+    def setUp(self):
+        self._reset_storage()
+
+    def _reset_storage(self):
+        """To re-apply any overridden storage settings"""
+        from django.contrib.staticfiles.storage import staticfiles_storage
+        staticfiles_storage._setup()
+
     # helper abstractions so we can reuse same tests for widget and
     # templatetag methods
     def _reset_context(self):
@@ -306,6 +315,15 @@ class TemplatetagMediaUrlTests(MIUTestCase):
         self._reset_context()
         return self.render("{% load markitup_tags %}{% markitup_js %}")
 
+    def _get_expected_media(self):
+        out = """<link href="%(prefix)s/markitup/skins/simple/style.css" type="text/css" media="screen" rel="stylesheet" />
+<link href="%(prefix)s/markitup/sets/default/style.css" type="text/css" media="screen" rel="stylesheet" />
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script type="text/javascript" src="%(prefix)s/markitup/ajax_csrf.js"></script>
+<script type="text/javascript" src="%(prefix)s/markitup/jquery.markitup.js"></script>
+<script type="text/javascript" src="%(prefix)s/markitup/sets/default/set.js"></script>""" % {'prefix': self.prefix}
+        return out
+
     # JQUERY_URL settings and resulting link
     jquery_urls = (
         ('jquery.min.js', '/static/jquery.min.js'),
@@ -331,12 +349,7 @@ class TemplatetagMediaUrlTests(MIUTestCase):
     skin_urls = set_urls
 
     def test_all_media(self):
-        out = """<link href="%(prefix)s/markitup/skins/simple/style.css" type="text/css" media="screen" rel="stylesheet" />
-<link href="%(prefix)s/markitup/sets/default/style.css" type="text/css" media="screen" rel="stylesheet" />
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-<script type="text/javascript" src="%(prefix)s/markitup/ajax_csrf.js"></script>
-<script type="text/javascript" src="%(prefix)s/markitup/jquery.markitup.js"></script>
-<script type="text/javascript" src="%(prefix)s/markitup/sets/default/set.js"></script>""" % {'prefix': self.prefix}
+        out = self._get_expected_media()
         self.assertHTMLEqual(self._get_media(), out)
 
     def test_jquery_url(self):
@@ -379,6 +392,14 @@ class TemplatetagMediaUrlTests(MIUTestCase):
                 self.assertIn(link, self._get_css())
         finally:
             settings.MARKITUP_SKIN = _old_miu_skin
+
+    @override_settings(STATICFILES_STORAGE='tests.test_storage.SomeCustomStorage')
+    def test_honor_staticfiles_storage(self):
+        """Should not circumvent the user's STATICFILES_STORAGE setting"""
+        self._reset_storage()
+        self.prefix = 'https://cdn.example.com/static'
+        out = self._get_expected_media()
+        self.assertHTMLEqual(self._get_media(), out)
 
 
 class WidgetMediaUrlTests(TemplatetagMediaUrlTests):
