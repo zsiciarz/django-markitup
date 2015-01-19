@@ -4,6 +4,9 @@ CHANGES
 tip (unreleased)
 ----------------
 
+* Template tags now support Django's STATICFILES_STORAGE setting.
+  Thanks Ivan Ven Osdel for report and fix.
+
 2.2.2 (2014.09.08)
 ------------------
 

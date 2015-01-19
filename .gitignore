@@ -7,3 +7,4 @@ HGREV
 .pydevproject
 .tox/
 Django-*.egg
+.idea
