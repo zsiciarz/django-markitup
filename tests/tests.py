@@ -6,7 +6,7 @@ import re
 from django.core import serializers
 from django.db.models.fields import FieldDoesNotExist
 from django.forms.models import modelform_factory
-from django.template import Template, Context, get_library
+from django.template import Template, Context
 from django.test import TestCase, Client
 from django.utils.safestring import mark_safe
 from django.utils.unittest import skipUnless
@@ -14,7 +14,7 @@ from django.utils.unittest import skipUnless
 from django.contrib import admin
 
 from markitup import settings
-from markitup.templatetags.markitup_tags import _get_markitup_context
+from markitup.templatetags import markitup_tags
 from markitup.widgets import MarkItUpWidget, MarkupTextarea, AdminMarkItUpWidget
 
 from .models import Post, AbstractParent, CallableDefault
@@ -136,7 +136,7 @@ class MarkupFieldSerializationTests(TestCase):
 class MarkupFieldFormTests(TestCase):
     def setUp(self):
         self.post = Post(title='example post', body='**markdown**')
-        self.form_class = modelform_factory(Post)
+        self.form_class = modelform_factory(Post, exclude=[])
 
     def testWidget(self):
         self.assertEqual(self.form_class().fields['body'].widget.__class__,
@@ -157,7 +157,7 @@ class MarkupFieldFormTests(TestCase):
 class HiddenFieldFormTests(TestCase):
     def setUp(self):
         self.post = CallableDefault(body='[link](http://example.com) & "text"')
-        self.form_class = modelform_factory(CallableDefault)
+        self.form_class = modelform_factory(CallableDefault, exclude=[])
 
     def testHiddenFieldContents(self):
         form = self.form_class(instance=self.post)
@@ -283,8 +283,7 @@ class TemplatetagMediaUrlTests(MIUTestCase):
     # templatetag methods
     def _reset_context(self):
         # monkeypatch a forced recalculation of the template context
-        tags = get_library("markitup_tags")
-        tags._markitup_context = _get_markitup_context()
+        markitup_tags.register._markitup_context = markitup_tags._get_markitup_context()
 
     multiple_newlines_re = re.compile('\n+')
 
