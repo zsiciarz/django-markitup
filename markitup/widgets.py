@@ -1,20 +1,14 @@
-"""
-widgets for django-markitup
-
-Time-stamp: <2011-11-26 14:39:52 carljm widgets.py>
-
-"""
-
 from __future__ import unicode_literals
 
+import posixpath
 from django import forms
-from django.utils.safestring import mark_safe
 from django.contrib.admin.widgets import AdminTextareaWidget
-from django.core.urlresolvers import reverse, NoReverseMatch
-
+from django.core.urlresolvers import NoReverseMatch, reverse
+from django.template.loader import render_to_string
+from django.utils.safestring import mark_safe
 from markitup import settings
 from markitup.util import absolute_url
-import posixpath
+
 
 class MarkupInput(forms.Widget):
     def render(self, name, value, attrs=None):
@@ -28,8 +22,10 @@ class MarkupInput(forms.Widget):
                 pass
         return super(MarkupInput, self).render(name, value, attrs)
 
+
 class MarkupTextarea(MarkupInput, forms.Textarea):
     pass
+
 
 class MarkupHiddenWidget(MarkupInput, forms.HiddenInput):
     pass
@@ -67,8 +63,8 @@ class MarkItUpWidget(MarkupTextarea):
                                absolute_url('markitup/jquery.markitup.js'),
                                posixpath.join(self.miu_set, 'set.js')]
         return forms.Media(
-            css= {'screen': (posixpath.join(self.miu_skin, 'style.css'),
-                             posixpath.join(self.miu_set, 'style.css'))},
+            css={'screen': (posixpath.join(self.miu_skin, 'style.css'),
+                            posixpath.join(self.miu_set, 'style.css'))},
             js=js_media)
     media = property(_media)
 
@@ -77,32 +73,15 @@ class MarkItUpWidget(MarkupTextarea):
 
         final_attrs = self.build_attrs(attrs)
 
-        if self.auto_preview:
-            auto_preview = "$('a[title=\"Preview\"]').trigger('mouseup');"
-        else: auto_preview = ''
-
         try:
-            preview_url = (
-                'mySettings["previewParserPath"] = "%s";'
-                % reverse('markitup_preview'))
+            preview_url = reverse('markitup_preview')
         except NoReverseMatch:
-           preview_url = "";
+            preview_url = ""
 
-        html += """
-        <script type="text/javascript">
-        (function($) {
-          $(document).ready(function() {
-            var element = $("#%(id)s");
-            if(!element.hasClass("markItUpEditor")) {
-              %(preview_url)s
-              element.markItUp(mySettings);
-            }
-            %(auto_preview)s
-          });
-          })(jQuery);
-        </script>
-        """ % {'id': final_attrs['id'], 'auto_preview': auto_preview,
-               'preview_url': preview_url}
+        html += render_to_string('markitup/editor.html',
+                                 {'textarea_id': final_attrs['id'],
+                                 'AUTO_PREVIEW': self.auto_preview,
+                                 'preview_url': preview_url})
 
         return mark_safe(html)
 
