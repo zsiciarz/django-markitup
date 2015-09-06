@@ -2,6 +2,21 @@
 django-markitup
 ===============
 
+.. image:: https://img.shields.io/pypi/v/django-markitup.svg
+    :target: https://pypi.python.org/pypi/django-markitup/
+    :alt: Latest PyPI version
+
+.. image:: https://img.shields.io/pypi/dm/django-markitup.svg
+    :target: https://pypi.python.org/pypi/django-markitup/
+    :alt: Number of PyPI downloads
+
+.. image:: https://img.shields.io/pypi/pyversions/django-markitup.svg
+    :target: https://pypi.python.org/pypi/django-markitup/
+    :alt: Supported Python versions
+
+.. image:: https://travis-ci.org/zsiciarz/django-markitup.svg
+    :target: https://travis-ci.org/zsiciarz/django-markitup
+
 A Django reusable application for end-to-end markup handling. Includes:
 
 * Easy integration of the `MarkItUp!`_ markup editor widget (by Jay
