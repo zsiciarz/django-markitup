@@ -5,6 +5,5 @@ include MANIFEST.in
 include README.rst
 include TODO.rst
 include CONTRIBUTING.rst
-include HGREV
 recursive-include markitup/templates *.html
 recursive-include markitup/static *.html *.css *.js *.txt *.png
