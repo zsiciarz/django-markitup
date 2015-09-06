@@ -12,3 +12,4 @@ Mikhael Korneev
 Neil Muller
 Roman Akinfold <akinfold@gmail.com>
 Sebastian Brandt
+Zbigniew Siciarz <zbigniew@siciarz.net>
