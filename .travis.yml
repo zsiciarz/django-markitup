@@ -1,0 +1,22 @@
+sudo: false
+language: python
+env:
+    - TOXENV=py26-1.4
+    - TOXENV=py26-1.6
+    - TOXENV=py27-1.4
+    - TOXENV=py27-1.6
+    - TOXENV=py27-1.7
+    - TOXENV=py27-1.8
+    - TOXENV=py27-1.9
+    - TOXENV=py33-1.6
+    - TOXENV=py33-1.7
+    - TOXENV=py33-1.8
+    - TOXENV=py34-1.6
+    - TOXENV=py34-1.7
+    - TOXENV=py34-1.8
+    - TOXENV=py34-1.9
+install:
+    - pip install tox
+script:
+    - export PYTHONPATH=$PYTHONPATH:`pwd`
+    - tox
