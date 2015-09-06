@@ -22,7 +22,7 @@ setup(
     long_description=long_description,
     author='Carl Meyer',
     author_email='carl@oddbird.net',
-    url='http://bitbucket.org/carljm/django-markitup/',
+    url='https://github.com/zsiciarz/django-markitup',
     packages=['markitup', 'markitup.templatetags'],
     classifiers=[
         'Development Status :: 5 - Production/Stable',

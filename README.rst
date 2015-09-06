@@ -23,12 +23,6 @@ Install from PyPI with ``easy_install`` or ``pip``::
 
     pip install django-markitup
 
-or get the `in-development version`_::
-
-    pip install django-markitup==tip
-
-.. _in-development version: http://bitbucket.org/carljm/django-markitup/get/tip.gz#egg=django_markitup-tip
-
 To use ``django-markitup`` in your Django project:
 
     1. Add ``'markitup'`` to your ``INSTALLED_APPS`` setting.
