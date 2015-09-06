@@ -5,6 +5,8 @@ from os.path import dirname
 MIU_TEST_ROOT = dirname(__file__)
 
 INSTALLED_APPS = [
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
     "markitup",
     "tests"]
 

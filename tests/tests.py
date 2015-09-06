@@ -3,13 +3,17 @@ from __future__ import unicode_literals
 import json
 import re
 
+try:
+    from unittest import skipUnless
+except ImportError:
+    from django.utils.unittest import skipUnless
+
 from django.core import serializers
 from django.db.models.fields import FieldDoesNotExist
 from django.forms.models import modelform_factory
 from django.template import Template, Context
 from django.test import TestCase, Client
 from django.utils.safestring import mark_safe
-from django.utils.unittest import skipUnless
 from django.test.utils import override_settings
 
 from django.contrib import admin
