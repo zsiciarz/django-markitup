@@ -8,14 +8,9 @@ INSTALLED_APPS = [
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "markitup",
-    "tests"]
-
-try:
-    # Add test_migrations if Django supports native migrations
-    from django.db import migrations
-    INSTALLED_APPS.append('tests.test_migration')
-except ImportError:
-    pass
+    "tests",
+    "tests.test_migration",
+]
 
 DATABASES = {
     "default": {
