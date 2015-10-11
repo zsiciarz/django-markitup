@@ -6,7 +6,11 @@ master (unreleased)
 
 * Template tags now support Django's STATICFILES_STORAGE setting.
   Thanks Ivan Ven Osdel for report and fix.
+* Dropped compatibility with Django < 1.7.
 * Compatibility with Django 1.8 and 1.9.
+* Dropped compatibility with Python 2.6.
+* Added support for Python 3.5.
+
 
 2.2.2 (2014.09.08)
 ------------------
