@@ -3,13 +3,7 @@ from __future__ import unicode_literals
 import json
 import re
 
-try:
-    from unittest import skipUnless
-except ImportError:
-    from django.utils.unittest import skipUnless
-
 from django.core import serializers
-from django.db.models.fields import FieldDoesNotExist
 from django.forms.models import modelform_factory
 from django.template import Template, Context
 from django.test import TestCase, Client
@@ -440,23 +434,3 @@ class WidgetMediaUrlTests(TemplatetagMediaUrlTests):
                 self.assertIn(link, self._get_js())
             else:
                 self.assertNotIn('src=""', self._get_js())
-
-try:
-    from south.modelsinspector import introspector
-except ImportError:
-    introspector = None
-
-
-class SouthFreezingTests(TestCase):
-    @skipUnless(introspector, "South not available")
-    def test_introspector_adds_no_rendered_field(self):
-        mf = Post._meta.get_field('body')
-        args, kwargs = introspector(mf)
-        self.assertEqual(kwargs['no_rendered_field'], 'True')
-
-    @skipUnless(introspector, "South not available")
-    def test_no_rendered_field_works(self):
-        from .models import NoRendered
-        self.assertRaises(FieldDoesNotExist,
-                          NoRendered._meta.get_field,
-                          '_body_rendered')

@@ -77,10 +77,6 @@ class MarkupDescriptor(object):
 
 class MarkupField(models.TextField):
     def __init__(self, *args, **kwargs):
-        # for South FakeORM compatibility: the frozen version of a
-        # MarkupField can't try to add a _rendered field, because the
-        # _rendered field itself is frozen as well. See introspection
-        # rules below.
         self.add_rendered_field = not kwargs.pop('no_rendered_field', False)
         super(MarkupField, self).__init__(*args, **kwargs)
 
@@ -105,8 +101,7 @@ class MarkupField(models.TextField):
         name, path, args, kwargs = super(MarkupField, self).deconstruct()
         # Force add_rendered_field to False for migrations
         # deconstruct can be called multiple times during the migration,
-        # so setting it to self.add_rendered_field, as done for south
-        # migrations, may do the wrong thing.
+        # so setting it to self.add_rendered_field may do the wrong thing.
         kwargs['no_rendered_field'] = True
         return name, path, args, kwargs
 
@@ -128,17 +123,3 @@ class MarkupField(models.TextField):
 # register MarkupField to use the custom widget in the Admin
 from django.contrib.admin.options import FORMFIELD_FOR_DBFIELD_DEFAULTS
 FORMFIELD_FOR_DBFIELD_DEFAULTS[MarkupField] = {'widget': widgets.AdminMarkItUpWidget}
-
-# allow South to handle MarkupField smoothly
-try:
-    from south.modelsinspector import add_introspection_rules
-    # For a normal MarkupField, the add_rendered_field attribute is
-    # always True, which means no_rendered_field arg will always be
-    # True in a frozen MarkupField, which is what we want.
-    add_introspection_rules(rules=[((MarkupField,),
-                                    [],
-                                    {'no_rendered_field': ('add_rendered_field',
-                                                           {})})],
-                            patterns=['markitup\.fields\.'])
-except ImportError:
-    pass

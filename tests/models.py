@@ -24,9 +24,7 @@ class AbstractParent(models.Model):
 
 class NoRendered(models.Model):
     """
-    Test that the no_rendered_field keyword arg works. This arg should
-    never be used except by the South model-freezing.
-
+    Test that the no_rendered_field keyword arg works.
     """
     body = MarkupField(no_rendered_field=True)
 
