@@ -214,17 +214,21 @@ Assuming the ``Article`` model above::
 
     >>> a = Article.objects.all()[0]
     >>> a.body.raw
-    u'*fancy*'
+    '*fancy*'
     >>> a.body.rendered
-    u'<p><em>fancy</em></p>'
-    >>> print unicode(a.body)
+    '<p><em>fancy</em></p>'
+    >>> print(unicode(a.body))
     <p><em>fancy</em></p>
+    >>> a.body.render_with('markitup.renderers.render_rest')
+    >>> print(unicode(a.body))
+    '<div class="document">\n<p><em>fancy</em></p>\n</div>\n'
 
 Assignment to ``a.body`` is equivalent to assignment to
 ``a.body.raw``.
 
 .. note::
-    a.body.rendered is only updated when a.save() is called
+    a.body.rendered is only updated when a.save() or a.body.render_with()
+    is called
 
 Editing a MarkupField in a form
 -------------------------------
