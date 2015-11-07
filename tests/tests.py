@@ -96,11 +96,11 @@ class MarkupFieldTests(TestCase):
             ["id", "content", "_content_rendered"])
 
     def testRenderWith(self):
-        self.post.body.render_with('tests.filter.testfilter_upper', skip=['a', 's'])
+        self.post.body.render_with(str('tests.filter.testfilter_upper'), skip=['a', 's'])
         self.assertEquals(str(self.post.body), "REPLaCE THIs TEXT")
 
     def testRenderWithNoArgs(self):
-        self.post.body.render_with('tests.filter.testfilter_upper')
+        self.post.body.render_with(str('tests.filter.testfilter_upper'))
         self.assertEquals(str(self.post.body), "REPLACE THIS TEXT")
 
 
