@@ -19,10 +19,6 @@ from markitup.widgets import MarkItUpWidget, MarkupTextarea, AdminMarkItUpWidget
 from .models import Post, AbstractParent, CallableDefault
 
 
-def test_filter(text, **kwargs):
-    return str(text) + str(kwargs)
-
-
 class MarkupFieldTests(TestCase):
     def setUp(self):
         self.post = Post.objects.create(title='example post',
