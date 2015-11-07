@@ -6,6 +6,7 @@ master (unreleased)
 
 * Template tags now support Django's STATICFILES_STORAGE setting.
   Thanks Ivan Ven Osdel for report and fix.
+* Added ``render_with`` method to render a MarkupField with a different filter.
 * Dropped compatibility with Django < 1.7.
 * Compatibility with Django 1.8 and 1.9.
 * Dropped compatibility with Python 2.6.

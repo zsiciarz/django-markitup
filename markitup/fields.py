@@ -54,6 +54,11 @@ class Markup(SafeData):
     def __len__(self):
         return len(self.rendered)
 
+    def render_with(self, dotted_path, **kwargs):
+        render_func = _get_render_func(dotted_path, **kwargs)
+        rendered = render_func(self.raw)
+        setattr(self.instance, self.rendered_field_name, rendered)
+
 
 class MarkupDescriptor(object):
     def __init__(self, field):

@@ -95,13 +95,13 @@ class MarkupFieldTests(TestCase):
             [f.name for f in Child._meta.fields],
             ["id", "content", "_content_rendered"])
 
+    def testRenderWith(self):
+        self.post.body.render_with('tests.filter.testfilter_upper', skip=['a', 's'])
+        self.assertEquals(str(self.post.body), "REPLaCE THIs TEXT")
 
-# TODO
-#    def testOverrideFilter(self):
-#        self.post.body.save_markup('tests.tests.test_filter',
-#                                   some_arg='some_val')
-#        self.assertEquals(unicode(self.post.body),
-#                          u"**markdown**{'some_arg': 'some_val'}")
+    def testRenderWithNoArgs(self):
+        self.post.body.render_with('tests.filter.testfilter_upper')
+        self.assertEquals(str(self.post.body), "REPLACE THIS TEXT")
 
 
 class MarkupFieldSerializationTests(TestCase):
