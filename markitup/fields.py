@@ -102,6 +102,12 @@ class MarkupField(models.TextField):
         value = self._get_val_from_obj(obj)
         return value.raw
 
+    def to_python(self, value):
+        if isinstance(value, Markup):
+            return value
+        else:
+            return super(MarkupField, self).to_python(value)
+
     def deconstruct(self):
         name, path, args, kwargs = super(MarkupField, self).deconstruct()
         # Force add_rendered_field to False for migrations
