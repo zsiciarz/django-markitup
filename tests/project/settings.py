@@ -12,7 +12,7 @@ TEMPLATE_DIRS = [join(BASE_DIR, 'templates')]
 ROOT_URLCONF = 'tests.project.urls'
 
 MARKITUP_FILTER = ('markdown.markdown', {'safe_mode': True})
-MARKITUP_SET = 'markitup/sets/markdown'
+MARKITUP_SET = 'markitup/sets/markdown/'  # Default includes trailing slash so that others know it's a directory
 
 DEBUG = True
 
