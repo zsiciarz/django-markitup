@@ -266,13 +266,13 @@ To use an alternate set, assign the ``MARKITUP_SET`` setting a URL path
 (absolute or relative to ``STATIC_URL``) to the set directory.  For
 instance, to use the "markdown" set included with django-markitup::
 
-    MARKITUP_SET = 'markitup/sets/markdown'
+    MARKITUP_SET = 'markitup/sets/markdown/'
 
 MarkItUp! skins can be specified in a similar manner.  Both "simple"
 and "markitup" skins are included, by default "simple" is used.  To
 use the "markitup" skin instead::
 
-    MARKITUP_SKIN = 'markitup/skins/markitup'
+    MARKITUP_SKIN = 'markitup/skins/markitup/'
 
 Neither of these settings has to refer to a location inside
 django-markitup's media.  You can define your own sets and skins and
