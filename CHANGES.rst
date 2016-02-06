@@ -6,6 +6,11 @@ master (unreleased)
 
 * none yet
 
+2.3.1 (2016.02.06)
+------------------
+
+* Use protocol-less URL for externally hosted jQuery to avoid browser warnings.
+
 
 2.3.0 (2016.01.17)
 ------------------
