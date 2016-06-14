@@ -4,7 +4,8 @@ CHANGES
 master (unreleased)
 -------------------
 
-* none yet
+* Drop support for Python 3.3.
+* Drop compatibility with Django < 1.8.
 
 2.3.1 (2016.02.06)
 ------------------
