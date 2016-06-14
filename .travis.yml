@@ -8,12 +8,8 @@ addons:
             - python3.5
             - python3.5-dev
 env:
-    - TOXENV=py27-1.7
     - TOXENV=py27-1.8
     - TOXENV=py27-1.9
-    - TOXENV=py33-1.7
-    - TOXENV=py33-1.8
-    - TOXENV=py34-1.7
     - TOXENV=py34-1.8
     - TOXENV=py34-1.9
     - TOXENV=py35-1.9
