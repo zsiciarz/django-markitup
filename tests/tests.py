@@ -139,14 +139,16 @@ class MarkupFieldFormTests(TestCase):
 
     def testFormFieldContents(self):
         form = self.form_class(instance=self.post)
+        required = getattr(form, 'use_required_attribute', False)
         self.assertHTMLEqual(str(form['body']),
-                          u'<textarea id="id_body" rows="10" cols="40" name="body">**markdown**</textarea>')
+                          u'<textarea id="id_body" rows="10" cols="40" name="body"{0}>**markdown**</textarea>'
+                          .format(' required' if required else ''))
 
     def testAdminFormField(self):
         ma = admin.ModelAdmin(Post, admin.site)
-        self.assertEqual(ma.formfield_for_dbfield(
-                Post._meta.get_field('body')).widget.__class__,
-                          AdminMarkItUpWidget)
+        self.assertEqual(
+            ma.formfield_for_dbfield(Post._meta.get_field('body'), request=None).widget.__class__,
+            AdminMarkItUpWidget)
 
 
 class MarkupFieldFormSaveTests(TestCase):
@@ -180,12 +182,13 @@ class HiddenFieldFormTests(TestCase):
 
     def testHiddenFieldContents(self):
         form = self.form_class(instance=self.post)
+        required = getattr(form, 'use_required_attribute', False)
         self.assertHTMLEqual(str(form['body']), (
-            u'<textarea id="id_body" rows="10" cols="40" name="body">'
+            u'<textarea id="id_body" rows="10" cols="40" name="body"{0}>'
             u'[link](http://example.com) &amp; &quot;text&quot;'
             u'</textarea><input type="hidden" name="initial-body" value="'
             u'[link](http://example.com) &amp; &quot;text&quot;" '
-            u'id="initial-id_body" />'
+            u'id="initial-id_body" />'.format(' required' if required else '')
         ))
 
 
