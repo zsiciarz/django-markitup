@@ -144,9 +144,9 @@ class MarkupFieldFormTests(TestCase):
 
     def testAdminFormField(self):
         ma = admin.ModelAdmin(Post, admin.site)
-        self.assertEqual(ma.formfield_for_dbfield(
-                Post._meta.get_field('body')).widget.__class__,
-                          AdminMarkItUpWidget)
+        self.assertEqual(
+            ma.formfield_for_dbfield(Post._meta.get_field('body'), request=None).widget.__class__,
+            AdminMarkItUpWidget)
 
 
 class MarkupFieldFormSaveTests(TestCase):
