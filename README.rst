@@ -98,10 +98,10 @@ To use the widget in the Django admin::
 
     class MyModelAdmin(admin.ModelAdmin):
     ...
-    def formfield_for_dbfield(self, db_field, **kwargs):
+    def formfield_for_dbfield(self, db_field, request, **kwargs):
         if db_field.name == 'content':
             kwargs['widget'] = AdminMarkItUpWidget()
-        return super(MyModelAdmin, self).formfield_for_dbfield(db_field, **kwargs)
+        return super(MyModelAdmin, self).formfield_for_dbfield(db_field, request, **kwargs)
 
 You can also use the formfield_overrides attribute of the ModelAdmin, which
 is simpler but only allows setting the widget per field type (so it isn't
