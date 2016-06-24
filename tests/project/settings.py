@@ -5,7 +5,7 @@ BASE_DIR = dirname(abspath(__file__))
 INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'markitup',
-    ]
+]
 
 TEMPLATES = [
     {
