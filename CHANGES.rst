@@ -4,6 +4,11 @@ CHANGES
 master (unreleased)
 -------------------
 
+* none yet
+
+3.0.0 (2016.09.04)
+------------------
+
 * Drop support for Python 3.3.
 * Drop compatibility with Django < 1.8.
 
