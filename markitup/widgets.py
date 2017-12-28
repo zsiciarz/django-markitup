@@ -76,7 +76,10 @@ class MarkItUpWidget(MarkupTextarea):
     def render(self, name, value, attrs=None):
         html = super(MarkItUpWidget, self).render(name, value, attrs)
 
-        final_attrs = self.build_attrs(attrs)
+        # Passing base_attrs as a kwarg for compatibility with Django < 1.11
+        # (where it will be treated as an innocuous attr named base_attrs)
+        final_attrs = self.build_attrs(
+            base_attrs=self.attrs, extra_attrs=attrs)
 
         try:
             preview_url = reverse('markitup_preview')
