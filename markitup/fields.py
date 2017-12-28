@@ -99,7 +99,7 @@ class MarkupField(models.TextField):
         return value.raw
 
     def value_to_string(self, obj):
-        value = self._get_val_from_obj(obj)
+        value = self.value_from_object(obj)
         return value.raw
 
     def to_python(self, value):
