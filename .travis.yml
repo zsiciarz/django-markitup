@@ -7,15 +7,23 @@ addons:
         packages:
             - python3.5
             - python3.5-dev
+            - python3.6
+            - python3.6-dev
 env:
     - TOXENV=py27-1.8
     - TOXENV=py27-1.9
     - TOXENV=py27-1.10
+    - TOXENV=py27-1.11
     - TOXENV=py34-1.8
     - TOXENV=py34-1.9
     - TOXENV=py34-1.10
+    - TOXENV=py34-1.11
     - TOXENV=py35-1.9
     - TOXENV=py35-1.10
+    - TOXENV=py35-1.11
+    - TOXENV=py35-2.0
+    - TOXENV=py36-1.11
+    - TOXENV=py36-2.0
 install:
     - pip install tox
 script:
