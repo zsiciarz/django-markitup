@@ -34,7 +34,7 @@ A Django reusable application for end-to-end markup handling. Includes:
 Installation
 ============
 
-Install from PyPI with ``easy_install`` or ``pip``::
+Install from PyPI::
 
     pip install django-markitup
 
@@ -56,6 +56,8 @@ To use ``django-markitup`` in your Django project:
 
 Dependencies
 ------------
+
+``django-markitup`` 4.x requires `Django`_ 1.11 or later and Python 2.7+ or 3.4+.
 
 ``django-markitup`` 3.x requires `Django`_ 1.8 or later and Python 2.7+ or 3.4+.
 
@@ -96,12 +98,13 @@ To use the widget in the Django admin::
 
     from markitup.widgets import AdminMarkItUpWidget
 
+    class MyModelForm(forms.ModelForm):
+        content = forms.CharField(widget=AdminMarkItUpWidget())
+        # ...
+
     class MyModelAdmin(admin.ModelAdmin):
-    ...
-    def formfield_for_dbfield(self, db_field, request, **kwargs):
-        if db_field.name == 'content':
-            kwargs['widget'] = AdminMarkItUpWidget()
-        return super(MyModelAdmin, self).formfield_for_dbfield(db_field, request, **kwargs)
+        form = MyModelForm
+        # ...
 
 You can also use the formfield_overrides attribute of the ModelAdmin, which
 is simpler but only allows setting the widget per field type (so it isn't
